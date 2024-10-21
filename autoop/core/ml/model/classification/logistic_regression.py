@@ -4,12 +4,12 @@ from sklearn.linear_model import LogisticRegression
 
 class LogisticRegressionWrapper():
     """
-    It provides an interface for training and making predictions using the Logistic Regression model.
+    It used the logistic regression model for training and predictions.
     """
 
     def __init__(self, penalty: str = 'l2', C: float = 1.0) -> None:
         """
-        Initialize the Logistic Regression model with a penalty and regularization parameter.
+        Initialize the Logistic Regression model.
 
         param: penalty: The penalty to be used in the Logistic Regression model.
         param: C: The regularization parameter for the Logistic Regression model.
