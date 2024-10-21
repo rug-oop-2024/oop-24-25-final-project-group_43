@@ -157,11 +157,11 @@ If you did not implement the feature
 | `ML/detect-features`                  | FN           |       Jasmijn        |    X    | |
 | `ML/artifact`                         | NF           |                      |         | |
 | `ML/feature`                          | NF           |       Jasmijn        |    X    | |
-| `ML/metric`                           | NF           |                      |         | |
-| `ML/metric/extensions`                | FN           |                      |         | |
+| `ML/metric`                           | NF           |       Jasmijn        |    X    | |
+| `ML/metric/extensions`                | FN           |       Jasmijn        |    X    | |
 | `ML/model`                            | NF           |       Jasmijn        |    X    | |
-| `ML/model/extensions`                 | FN           |                      |         | |
-| `ML/pipeline/evaluation`              | FN           |                      |         | | 
+| `ML/model/extensions`                 | FN           |       Jasmijn        |    X    | |
+| `ML/pipeline/evaluation`              | FN           |       Jasmijn        |    X    | | 
 | `ST/page/datasets`                    | NF           |                      |         | |
 | `ST/datasets/management/create`       | FN           |                      |         | |
 | `ST/datasets/management/save`         | FN           |                      |         | |

@@ -47,7 +47,7 @@ class MultipleLinearRegressor():
         # Make predictions
         return np.dot(observations, self._coefficients)
 
-    def get_parameters(self) -> dict[str, np.ndarray]:
+    def get_params(self) -> dict[str, np.ndarray]:
         """
         Return the parameters of the model.
 

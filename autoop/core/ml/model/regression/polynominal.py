@@ -64,4 +64,4 @@ class PolynomialRegression:
               of the underlying multiple linear regression (MLR) model.
         """
         # Get the coefficients and intercept from the underlying MLR model
-        return self.mlr.get_parameters()
+        return self.mlr.get_params()
