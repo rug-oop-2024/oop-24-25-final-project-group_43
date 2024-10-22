@@ -3,3 +3,5 @@ import base64
 
 class Artifact(BaseModel):
     pass
+
+#model.dump
