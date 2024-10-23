@@ -19,6 +19,8 @@ class Artifact(BaseModel):
         _id = _id  + ':' + version
         return _id
 
+    # All the methods below are abstract and should be implemented in the subclasses
+    # They are not done yet, just concepts of what should be according to pipeline.py
     @property
     def save(self, data: bytes) -> bytes:
         return data
@@ -30,12 +32,16 @@ class Artifact(BaseModel):
     @property
     def get(self, type: str):
         return self.data
+    
+    def dump(self, data: bytes):
+        return data
 
 # with json you can convert the object to a string and then bytes and save it to a file
 # data should be in bytes
 # saved artifact should be in data
 
 # model.dump
+# What marco said about this class:
 # baseclass for all the logical objects in the pipeline
 # define an abstract method to dump the object to a file
 # we want to have files that refers to this specific type of attr

@@ -21,6 +21,7 @@ class Model(Artifact):
     def get_params(self) -> dict:
         pass
 
+    # Need to implement this method
     @abstractmethod
     def to_artifact(self):
         pass

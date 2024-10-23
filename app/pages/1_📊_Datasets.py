@@ -8,4 +8,5 @@ automl = AutoMLSystem.get_instance()
 
 datasets = automl.registry.list(type="dataset")
 
+st.write("# 📊 Datasets")
 # your code here
