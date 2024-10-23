@@ -155,7 +155,7 @@ If you did not implement the feature
 |-------------------------------------- |--------------|----------------------|--------------------------|---------|         
 | `Up-to-date requirements.txt`         | NF           |                      |         | |
 | `ML/detect-features`                  | FN           |       Jasmijn        |    X    | |
-| `ML/artifact`                         | NF           |                      |         | |
+| `ML/artifact`                         | NF           |        David         |    X    | |
 | `ML/feature`                          | NF           |       Jasmijn        |    X    | |
 | `ML/metric`                           | NF           |       Jasmijn        |    X    | |
 | `ML/metric/extensions`                | FN           |       Jasmijn        |    X    | |
