@@ -5,7 +5,9 @@ import numpy as np
 from copy import deepcopy
 from typing import Literal
 
-class Model():
+class Model(Artifact):
+    def __init__(self, *args, **kwargs):
+        pass
 
     @abstractmethod
     def fit(self, observations: np.ndarray, ground_truth: np.ndarray) -> None:
@@ -19,5 +21,8 @@ class Model():
     def get_params(self) -> dict:
         pass
 
+    @abstractmethod
+    def to_artifact(self):
+        pass
 
     
