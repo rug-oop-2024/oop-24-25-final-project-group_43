@@ -3,13 +3,13 @@ import base64
 
 class Artifact(BaseModel):
     def __init__(self, name: str, data: bytes):
-        name: str
+        name = name
         version: str
         asset_path: str
         tags: list
         metadata: str
         type: str
-        data: list
+        data = data
         _id: str
 
     @property
