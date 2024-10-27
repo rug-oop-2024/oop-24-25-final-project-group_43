@@ -1,6 +1,6 @@
 import numpy as np
 
-class MultipleLinearRegressor():
+class MultipleLinearRegression():
     """
     Implements a multiple linear regression model.
 
