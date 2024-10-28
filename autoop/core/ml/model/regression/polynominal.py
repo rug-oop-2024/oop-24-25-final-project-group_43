@@ -2,7 +2,7 @@ import numpy as np
 
 from sklearn.preprocessing import PolynomialFeatures
 
-from autoop.core.ml.model.regression.multiple_linear_regression import MultipleLinearRegressor
+from autoop.core.ml.model.regression.multiple_linear_regression import MultipleLinearRegression
 
 class PolynomialRegression:
     def __init__(self, degree=2):
@@ -21,7 +21,7 @@ class PolynomialRegression:
         """
         self.degree = degree
         self.poly_features = PolynomialFeatures(degree=self.degree)
-        self.mlr = MultipleLinearRegressor()  # Using MLR for the regression part
+        self.mlr = MultipleLinearRegression()  # Using MLR for the regression part
 
     def fit(self, X: np.ndarray, y: np.ndarray):
         """
