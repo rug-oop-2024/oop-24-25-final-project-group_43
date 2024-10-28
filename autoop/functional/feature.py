@@ -11,10 +11,31 @@ def detect_feature_types(dataset: Dataset) -> List[Feature]:
         List[Feature]: List of features with their types.
     """
     features = []
-    first_row = dataset.data.iloc[0]
+    first_row = dataset.data.iloc[0] # does data.iloc[] already exist or should it be created?
     for col in first_row:
         if isinstance(col, str):
             features.append(Feature(name=col, type="categorical"))
         elif isinstance(col, (int, float)):
             features.append(Feature(name=col, type="numerical"))
     return features
+
+# i don't think categorical and numerical can be determined by being instances of strings and integers/floats
+#       this is from test_features.py:
+
+        # numerical_columns = [
+        #     "age",
+        #     "education-num",
+        #     "capital-gain",
+        #     "capital-loss",
+        #     "hours-per-week",
+        # ]
+        # categorical_columns = [
+        #     "workclass",
+        #     "education",
+        #     "marital-status",
+        #     "occupation",
+        #     "relationship",
+        #     "race",
+        #     "sex",
+        #     "native-country",
+        # ]
