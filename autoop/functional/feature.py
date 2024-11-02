@@ -1,5 +1,7 @@
 
 from typing import List
+import pandas as pd
+import json
 from autoop.core.ml.dataset import Dataset
 from autoop.core.ml.feature import Feature
 
@@ -11,7 +13,19 @@ def detect_feature_types(dataset: Dataset) -> List[Feature]:
         List[Feature]: List of features with their types.
     """
     features = []
-    first_row = dataset.data.iloc[0] # does data.iloc[] already exist or should it be created?
+    decoded_data = dataset.data.decode('utf-8')  # Adjust encoding if necessary
+    #print("Decoded data:", decoded_data)
+    
+    # Parse JSON from the decoded data
+    if isinstance(decoded_data, str):
+        data_dict = json.loads(decoded_data)
+        print("Parsed JSON data:", data_dict)
+
+    # Create DataFrame from parsed data
+    df = pd.DataFrame(data_dict)
+
+    first_row = df.iloc[0]
+    print(f"This is the first row!!! \n {first_row}")
     for col in first_row:
         if isinstance(col, str):
             features.append(Feature(name=col, type="categorical"))
