@@ -33,7 +33,6 @@ def get_metric(name: str) -> Any:
 class Metric(ABC):
     """Base class for all metrics."""
     # remember: metrics take ground truth and prediction as input and return a real number
-    @abstractmethod
     def __call__(self, ground_truth: np.ndarray, prediction: np.ndarray) -> float:
         self.evaluate(ground_truth, prediction)
     
