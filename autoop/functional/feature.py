@@ -13,6 +13,7 @@ def detect_feature_types(dataset: Dataset) -> List[Feature]:
         List[Feature]: List of features with their types.
     """
     features = []
+    """
     decoded_data = dataset.data.decode('utf-8')  # Adjust encoding if necessary
     #print("Decoded data:", decoded_data)
     
@@ -26,12 +27,12 @@ def detect_feature_types(dataset: Dataset) -> List[Feature]:
 
     first_row = df.iloc[0]
     print(f"This is the first row!!! \n {first_row}")
-    for col in first_row:
-        if isinstance(col, str):
+    """
+    for col in dataset.data.columns:
+        if dataset.data[col].dtype == "object":
             features.append(Feature(name=col, type="categorical"))
-        elif isinstance(col, (int, float)):
+        else:
             features.append(Feature(name=col, type="numerical"))
-    return features
 
 # i don't think categorical and numerical can be determined by being instances of strings and integers/floats
 #       this is from test_features.py:
