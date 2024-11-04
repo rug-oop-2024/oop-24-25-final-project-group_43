@@ -1,13 +1,21 @@
 
-from abc import abstractmethod
+from abc import ABC,abstractmethod
 from autoop.core.ml.artifact import Artifact
 import numpy as np
 from copy import deepcopy
 from typing import Literal
 
-class Model(Artifact):
+
+# Changes:
+# Replaced Artifact with ABC as parent class
+# added self.parameters and self.type
+# commented out def to_artifact()
+
+class Model(ABC):
     def __init__(self, *args, **kwargs):
-        pass
+        self.parameters: dict = {}
+        self.type = type
+
 
     @abstractmethod
     def fit(self, observations: np.ndarray, ground_truth: np.ndarray) -> None:
@@ -22,8 +30,8 @@ class Model(Artifact):
         pass
 
     # Need to implement this method
-    @abstractmethod
-    def to_artifact(self):
-        pass
+    # @abstractmethod
+    # def to_artifact(self):
+    #     pass
 
     

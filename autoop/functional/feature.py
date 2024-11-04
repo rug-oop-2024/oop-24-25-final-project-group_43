@@ -13,44 +13,11 @@ def detect_feature_types(dataset: Dataset) -> List[Feature]:
         List[Feature]: List of features with their types.
     """
     features = []
-    """
-    decoded_data = dataset.data.decode('utf-8')  # Adjust encoding if necessary
-    #print("Decoded data:", decoded_data)
-    
-    # Parse JSON from the decoded data
-    if isinstance(decoded_data, str):
-        data_dict = json.loads(decoded_data)
-        print("Parsed JSON data:", data_dict)
-
-    # Create DataFrame from parsed data
-    df = pd.DataFrame(data_dict)
-
-    first_row = df.iloc[0]
-    print(f"This is the first row!!! \n {first_row}")
-    """
-    for col in dataset.data.columns:
-        if dataset.data[col].dtype == "object":
+    data = dataset.read()
+    for col in data.columns:
+        if data[col].dtype == "object":
             features.append(Feature(name=col, type="categorical"))
-        else:
+        elif data[col].dtype == "int64" or data[col].dtype == "float64":
             features.append(Feature(name=col, type="numerical"))
+    return features
 
-# i don't think categorical and numerical can be determined by being instances of strings and integers/floats
-#       this is from test_features.py:
-
-        # numerical_columns = [
-        #     "age",
-        #     "education-num",
-        #     "capital-gain",
-        #     "capital-loss",
-        #     "hours-per-week",
-        # ]
-        # categorical_columns = [
-        #     "workclass",
-        #     "education",
-        #     "marital-status",
-        #     "occupation",
-        #     "relationship",
-        #     "race",
-        #     "sex",
-        #     "native-country",
-        # ]
