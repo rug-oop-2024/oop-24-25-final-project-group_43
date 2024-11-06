@@ -20,7 +20,7 @@ file = st.file_uploader("Upload a CSV file", type=["csv"])
 if file is not None:
     df = pd.read_csv(file)
     st.write(df)
-    dataset = Dataset.from_dataframe(df, name="dataset", asset_path="dataset.csv")
+    dataset = Dataset.from_dataframe(df, name=file.name[:-4], asset_path=file.name)
     automl.registry.register(dataset)
     
     st.success("Dataset uploaded successfully.")
