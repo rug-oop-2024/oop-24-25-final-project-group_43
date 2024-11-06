@@ -15,7 +15,6 @@ class Artifact(BaseModel,ABC):
     metadata: Optional[dict] = None
     _id: str
 
-
     @property
     def id(self, asset_path: str, version: str) -> str:
         _id = asset_path.encode('ascii')
@@ -26,7 +25,6 @@ class Artifact(BaseModel,ABC):
     def save(self, data: bytes) -> bytes:
         with open(self.asset_path, 'wb') as file:
             file.write(self.data)
-
 
     def read(self):
         return self.data

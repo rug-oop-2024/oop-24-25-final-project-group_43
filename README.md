@@ -162,10 +162,10 @@ If you did not implement the feature
 | `ML/model`                            | NF           |       Jasmijn        |    X    | |
 | `ML/model/extensions`                 | FN           |       Jasmijn        |    X    | |
 | `ML/pipeline/evaluation`              | FN           |       Jasmijn        |    X    | | 
-| `ST/page/datasets`                    | NF           |                      |         | |
-| `ST/datasets/management/create`       | FN           |                      |         | |
-| `ST/datasets/management/save`         | FN           |                      |         | |
-| `ST/page/modelling`                   | NF           |                      |         | |
+| `ST/page/datasets`                    | NF           |       Jasmijn        |    X    | |
+| `ST/datasets/management/create`       | FN           |       Jasmijn        |    X    | |
+| `ST/datasets/management/save`         | FN           |       Jasmijn        |    X    | |
+| `ST/page/modelling`                   | NF           |       Jasmijn        |    X    | |
 | `ST/modelling/datasets/list`          | FN           |                      |         | |
 | `ST/modelling/datasets/features`      | FN           |                      |         | |
 | `ST/modelling/models`                 | FN           |                      |         | |
