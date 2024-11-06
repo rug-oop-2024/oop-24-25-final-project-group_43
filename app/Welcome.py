@@ -20,3 +20,7 @@ with open("README.md", "r", encoding="utf-8") as f:
     readme_content = f.read()
 
 st.markdown(readme_content)
+
+# Run the app with:
+# cd path/to/Welcome.py
+# streamlit run Welcome.py
