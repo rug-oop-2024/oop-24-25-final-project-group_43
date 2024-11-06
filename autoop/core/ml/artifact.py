@@ -16,10 +16,10 @@ class Artifact(BaseModel,ABC):
     _id: str
 
     @property
-    def id(self, asset_path: str, version: str) -> str:
-        _id = asset_path.encode('ascii')
+    def id(self) -> str:
+        _id = self.asset_path.encode('ascii')
         _id = base64.b64encode(_id)
-        _id = _id.decode() + ':' + version
+        _id = _id.decode() + ':' + self.version
         return _id
 
     def save(self, data: bytes) -> bytes:

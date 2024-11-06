@@ -21,6 +21,6 @@ if file is not None:
     df = pd.read_csv(file)
     st.write(df)
     dataset = Dataset.from_dataframe(df, name="dataset", asset_path="dataset.csv")
-    AutoMLSystem.get_instance().registry.register(dataset)
+    automl.registry.register(dataset)
     
     st.success("Dataset uploaded successfully.")
