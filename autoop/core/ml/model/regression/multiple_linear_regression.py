@@ -13,6 +13,7 @@ class MultipleLinearRegression(Model):
         """Initialize the model with an empty dictionary for the coefficients."""
         super().__init__()
         self._coefficients = None
+        self.type = "regression"
 
     def fit(self, observations: np.ndarray, ground_truth: np.ndarray) -> None:
         """
