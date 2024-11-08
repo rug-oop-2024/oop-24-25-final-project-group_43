@@ -2,14 +2,14 @@ import streamlit as st
 import pandas as pd
 import sys
 import os
-from autoop.core.ml.metric import get_metric
-from autoop.functional.feature import detect_feature_types
-from autoop.core.ml.pipeline import Pipeline
-from autoop.core.ml.model import get_model
 
 # Ensure the autoop module is in the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
+from autoop.core.ml.metric import get_metric
+from autoop.functional.feature import detect_feature_types
+from autoop.core.ml.pipeline import Pipeline
+from autoop.core.ml.model import get_model
 from app.core.system import AutoMLSystem
 from autoop.core.ml.dataset import Dataset
 
@@ -32,6 +32,12 @@ st.subheader("Dataset Selection")
 selected_dataset_name = st.selectbox("Select a dataset", [dataset.name for dataset in datasets])
 selected_dataset = next(dataset for dataset in datasets if dataset.name == selected_dataset_name)
 
+"""
+if st.button('Refresh Datasets'):
+    delete_datasets('path/to/datasets')
+    st.experimental_rerun()
+"""
+
 if selected_dataset:
     st.write(f"Selected dataset: {selected_dataset.name}")
 
@@ -42,8 +48,6 @@ if selected_dataset:
     st.write(df)
     datasett = Dataset.from_dataframe(df, name=selected_dataset.name, asset_path=selected_dataset.asset_path)
     features = detect_feature_types(datasett)
-
-
 
     feature_names = [feature.name for feature in features]
     
