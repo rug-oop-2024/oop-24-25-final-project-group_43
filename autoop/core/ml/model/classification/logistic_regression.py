@@ -1,8 +1,9 @@
 import numpy as np
 
+from autoop.core.ml.model import Model
 from sklearn.linear_model import LogisticRegression
 
-class LogisticRegressionWrapper():
+class LogisticRegressionWrapper(Model):
     """
     It used the logistic regression model for training and predictions.
     """
@@ -16,6 +17,7 @@ class LogisticRegressionWrapper():
         """
         super().__init__()
         self._model = LogisticRegression(penalty=penalty, C=C)
+        self.type = "classification"
 
     def fit(self, observations: np.ndarray, ground_truth: np.ndarray) -> None:
         """
