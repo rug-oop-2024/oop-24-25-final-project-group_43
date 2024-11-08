@@ -18,12 +18,9 @@ class Artifact(BaseModel,ABC):
     def id(self) -> str:
         # Encode the asset_path in base64
         path = base64.b64encode(self.asset_path.encode('ascii')).decode('ascii')
-        path = path.rstrip('=') 
-        path += '==' # Add '==' to the end of the path
-        sanitized_version = self.version.translate(str.maketrans(";.,=", "____"))
-        print(f"Encoded path (with '=='): {path}")
-        print(f"Sanitized version: {sanitized_version}")
-        return f'{path}:{sanitized_version}'
+        full_path = f"{path}_{self.version}".replace("=", "_")
+        print(full_path)
+        return full_path
 
     def save(self, data: bytes) -> bytes:
         with open(self.asset_path, 'wb') as file:
