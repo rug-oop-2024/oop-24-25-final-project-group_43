@@ -1,9 +1,10 @@
 import numpy as np
 
+from autoop.core.ml.model.model import Model
 from sklearn.linear_model import Lasso
 
 
-class LassoWrapper():
+class LassoWrapper(Model):
     """
     It provides an interface for training and making predictions using the Lasso model.
     """
@@ -16,6 +17,7 @@ class LassoWrapper():
         """
         super().__init__()
         self._model = Lasso()
+        self.type = "regression"
 
     def fit(self, observations: np.ndarray, ground_truth: np.ndarray) -> None:
         """
