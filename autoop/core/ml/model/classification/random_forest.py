@@ -1,8 +1,10 @@
 import numpy as np
 
+
+from autoop.core.ml.model.model import Model
 from sklearn.ensemble import RandomForestClassifier
 
-class RandomForest():
+class RandomForest(Model):
     """
     Implements a Random Forest model for classification.
 
@@ -17,6 +19,7 @@ class RandomForest():
         """
         super().__init__()
         self._model = RandomForestClassifier(n_estimators=n_estimators)
+        self.type = "classification"
 
     def fit(self, observations: np.ndarray, ground_truth: np.ndarray) -> None:
         """
