@@ -166,13 +166,13 @@ If you did not implement the feature
 | `ST/datasets/management/create`       | FN           |       Jasmijn        |    X    | |
 | `ST/datasets/management/save`         | FN           |       Jasmijn        |    X    | |
 | `ST/page/modelling`                   | NF           |       Jasmijn        |    X    | |
-| `ST/modelling/datasets/list`          | FN           |                      |         | |
-| `ST/modelling/datasets/features`      | FN           |                      |         | |
-| `ST/modelling/models`                 | FN           |                      |         | |
-| `ST/modelling/pipeline/split`         | FN           |                      |         | |
-| `ST/modelling/pipeline/metrics`       | FN           |                      |         | |
-| `ST/modelling/pipeline/summary`       | FN           |                      |         | |
-| `ST/modelling/pipeline/train`         | FN           |                      |         | |
+| `ST/modelling/datasets/list`          | FN           |       David          |    X    | |
+| `ST/modelling/datasets/features`      | FN           |       David          |    X    | |
+| `ST/modelling/models`                 | FN           |       David          |    X    | |
+| `ST/modelling/pipeline/split`         | FN           |       David          |    X    | |
+| `ST/modelling/pipeline/metrics`       | FN           |       David          |    X    | |
+| `ST/modelling/pipeline/summary`       | FN           |       David          |    X    | |
+| `ST/modelling/pipeline/train`         | FN           |       David          |         | |
 | `ST/modelling/pipeline/save`          | FN           |                      |         | |
 | `ST/page/deployment`                  | FN           |                      |         | |
 | `ST/deployment/load`                  | FN           |                      |         | |
