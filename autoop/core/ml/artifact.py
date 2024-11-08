@@ -13,20 +13,22 @@ class Artifact(BaseModel,ABC):
     tags: Optional[list[str]] = None
     data: Optional[bytes]
     metadata: Optional[dict] = None
-    _id: str
 
     @property
     def id(self) -> str:
-        _id = self.asset_path.encode('ascii')
-        _id = base64.b64encode(_id)
-        _id = _id.decode() + ':' + self.version
-        return _id
+        path = self.asset_path.encode('ascii')
+        path = base64.b64encode(path)
+        path = path.decode()
+        return f'{path}:{self.version}'
 
     def save(self, data: bytes) -> bytes:
         with open(self.asset_path, 'wb') as file:
             file.write(self.data)
 
-    def read(self):
+    def read(self) -> bytes:
+        #with open(self.asset_path, 'rb') as file:
+        #    self.data = file.read()
+        #print(type(self.data))
         return self.data
 
 
