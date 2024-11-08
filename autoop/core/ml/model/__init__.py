@@ -10,15 +10,28 @@ from autoop.core.ml.model.classification.random_forest import RandomForest
 REGRESSION_MODELS = [
     "Lasso",
     "Multiple Linear Regression",
-    "Polynomial"
+    "Polynomial Regression"
 ] # add your models as str here
 
 CLASSIFICATION_MODELS = [
     "KNN",
     "Logistic Regression",
-    "Random forest"
+    "Random Forest"
 ] # add your models as str here
 
 def get_model(model_name: str) -> Model:
-    """Factory function to get a model by name."""
-    raise NotImplementedError("To be implemented.")
+    match model_name:
+        case "Lasso":
+            return LassoWrapper()
+        case "Multiple Linear Regression":
+            return MultipleLinearRegression()
+        case "Polynomial Regression":
+            return PolynomialRegression()
+        case "KNN":
+            return KNN()
+        case "Logistic Regression":
+            return LogisticRegressionWrapper()
+        case "Random Forest":
+            return RandomForest()
+        case _:
+            raise ValueError(f"Metric {model_name} not found.")
