@@ -1,6 +1,8 @@
 import numpy as np
 
-class KNN():
+from autoop.core.ml.model.model import Model
+
+class KNN(Model):
     """
     Implements a K-Nearest Neigbors (KNN) model.
 
@@ -8,7 +10,7 @@ class KNN():
         based on its proximity to the training dataset.
     """
 
-    def __init__(self, k_value: int) -> None:
+    def __init__(self, k_value: int = 3) -> None:
         """
         Add more parameters to the class.
 
@@ -17,6 +19,7 @@ class KNN():
         return: None.
         """
         super().__init__()
+        self.type = "classification"
         self.k_value = k_value
         self._observations = None
         self._ground_truth = None
@@ -61,3 +64,12 @@ class KNN():
         k_nearest_labels = np.take(self._ground_truth, k_indices)
         # step 4: take the majority vote and return the label
         return np.bincount(k_nearest_labels).argmax()
+
+    def get_params(self) -> dict:
+        """
+        Provide access to the parameters of the model.
+
+        param: None
+        return: The parameters dictionary
+        """
+        return self._parameters
