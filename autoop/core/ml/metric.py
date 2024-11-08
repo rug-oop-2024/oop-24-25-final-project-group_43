@@ -15,17 +15,17 @@ def get_metric(name: str) -> Any:
     # Factory function to get a metric by name.
     # Return a metric instance given its str name.
     match name:
-        case "mean_squared_error":
+        case "Mean Squared Error":
             return MeanSquaredError()
-        case "root_mean_squared_error":
+        case "Root Mean Squared Error":
             return RootMeanSquaredError()
-        case "mean_absolute_error":
+        case "Mean Absolute Error":
             return MeanAbsoluteError()
-        case "accuracy":
+        case "Accuracy":
             return Accuracy()
-        case "recall":
+        case "Recall":
             return Recall()
-        case "precision":
+        case "Precision":
             return Precision()
         case _:
             raise ValueError(f"Metric {name} not found.")
