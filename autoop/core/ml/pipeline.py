@@ -134,6 +134,19 @@ Pipeline(
         return self._metrics_results_train
 
     def execute(self) -> dict:
+        """
+        Executes the machine learning pipeline by performing preprocessing,
+        data splitting, training, and evaluation.
+
+        Returns:
+            dict: A dictionary containing the following keys:
+                - "metrics": The evaluation metrics of the model on the
+                    test data.
+                - "predictions": The predictions made by the model on
+                    the test data.
+                - "metrics_train": The evaluation metrics of the model
+                    on the training data.
+        """
         self._preprocess_features()
         self._split_data()
         self._train()

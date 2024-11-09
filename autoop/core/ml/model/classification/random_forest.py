@@ -1,8 +1,7 @@
-import numpy as np
-
-
 from autoop.core.ml.model.model import Model
 from sklearn.ensemble import RandomForestClassifier
+
+import numpy as np
 
 
 class RandomForest(Model):

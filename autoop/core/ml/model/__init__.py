@@ -1,4 +1,3 @@
-
 from autoop.core.ml.model.model import Model
 from autoop.core.ml.model.regression.multiple_linear_regression \
     import MultipleLinearRegression
@@ -23,6 +22,25 @@ CLASSIFICATION_MODELS = [
 
 
 def get_model(model_name: str) -> Model:
+    """
+    Retrieve a machine learning model based on the provided model name.
+
+    Args:
+        model_name (str): The name of the model to retrieve.
+        Supported models are:
+            - "Lasso"
+            - "Multiple Linear Regression"
+            - "Polynomial Regression"
+            - "KNN"
+            - "Logistic Regression"
+            - "Random Forest"
+
+    Returns:
+        Model: An instance of the requested machine learning model.
+
+    Raises:
+        ValueError: If the provided model name is not supported.
+    """
     match model_name:
         case "Lasso":
             return LassoWrapper()

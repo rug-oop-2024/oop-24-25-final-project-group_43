@@ -1,7 +1,7 @@
-import numpy as np
-
 from autoop.core.ml.model import Model
 from sklearn.linear_model import LogisticRegression
+
+import numpy as np
 
 
 class LogisticRegressionWrapper(Model):

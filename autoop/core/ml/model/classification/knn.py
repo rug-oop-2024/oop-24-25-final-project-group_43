@@ -1,6 +1,6 @@
-import numpy as np
-
 from autoop.core.ml.model.model import Model
+
+import numpy as np
 
 
 class KNN(Model):
