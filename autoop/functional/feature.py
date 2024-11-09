@@ -14,10 +14,10 @@ def detect_feature_types(dataset: Dataset) -> List[Feature]:
         List[Feature]: List of features with their types.
     """
     features = []
-    data = dataset.read()
-    for col in data.columns:
-        if data[col].dtype == "object":
+    _data = dataset.read()
+    for col in _data.columns:
+        if _data[col].dtype == "object":
             features.append(Feature(name=col, type="categorical"))
-        elif data[col].dtype == "int64" or data[col].dtype == "float64":
+        elif _data[col].dtype == "int64" or _data[col].dtype == "float64":
             features.append(Feature(name=col, type="numerical"))
     return features
