@@ -1,7 +1,5 @@
 
 from typing import List
-import pandas as pd
-import json
 from autoop.core.ml.dataset import Dataset
 from autoop.core.ml.feature import Feature
 
