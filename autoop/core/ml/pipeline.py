@@ -73,8 +73,8 @@ Pipeline(
         }
         artifacts.append(Artifact(name="pipeline_config",
                                   data=pickle.dumps(pipeline_data)))
-        artifacts.append(self._model.
-                         to_artifact(name=f"pipeline_model_{self._model.type}"))
+        artifacts.append(self._model.to_artifact(
+            name=f"pipeline_model_{self._model.type}"))
         return artifacts
 
     def _register_artifact(self, name: str, artifact):
@@ -99,7 +99,7 @@ Pipeline(
         self._train_X = [vector[:int(split * len(vector))] for vector
                          in self._input_vectors]
         self._test_X = [vector[int(split * len(vector)):] for vector
-                         in self._input_vectors]
+                        in self._input_vectors]
         self._train_y = self._output_vector[:int(split *
                                                  len(self._output_vector))]
         self._test_y = self._output_vector[int(split *

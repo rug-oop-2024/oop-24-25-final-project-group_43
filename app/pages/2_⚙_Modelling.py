@@ -1,3 +1,10 @@
+from autoop.core.ml.metric import get_metric
+from autoop.functional.feature import detect_feature_types
+from autoop.core.ml.pipeline import Pipeline
+from autoop.core.ml.model import get_model
+from app.core.system import AutoMLSystem
+from autoop.core.ml.dataset import Dataset
+
 import streamlit as st
 import pandas as pd
 import sys
@@ -7,13 +14,6 @@ from typing import List
 # Ensure the autoop module is in the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
                                                 '../../')))
-
-from autoop.core.ml.metric import get_metric
-from autoop.functional.feature import detect_feature_types
-from autoop.core.ml.pipeline import Pipeline
-from autoop.core.ml.model import get_model
-from app.core.system import AutoMLSystem
-from autoop.core.ml.dataset import Dataset
 
 st.set_page_config(page_title="Modelling", page_icon="📈")
 
@@ -128,7 +128,7 @@ def train_model(datasett: Dataset, features: List[str],
     if st.button("Train Model"):
         st.write("Training model...")
         input_features = [
-            next(feature for feature in features if 
+            next(feature for feature in features if
                  feature.name == feature_name)
             for feature_name in input_features
         ]
@@ -199,26 +199,25 @@ input_features = st.multiselect("Select input features", feature_names)
 target_feature = st.selectbox("Select target feature", feature_names)
 
 if input_features and target_feature:
-        task_type = determine_task_type(input_features,
-                                        target_feature,
-                                        features)
-        model_type = select_model(task_type)
-        split_ratio = split_data()
-        metrics = select_metrics(task_type)
-        display_summary(selected_dataset.name,
-                        input_features,
-                        target_feature,
-                        model_type,
-                        split_ratio,
-                        metrics)
-        (pipeline, result) = train_model(datasett,
-                                         features,
-                                         input_features,
-                                         target_feature,
-                                         model_type,
-                                         split_ratio,
-                                         metrics)
-        save_pipeline(pipeline)
-        if result:
-            print_result(result)
-        
+    task_type = determine_task_type(input_features,
+                                    target_feature,
+                                    features)
+    model_type = select_model(task_type)
+    split_ratio = split_data()
+    metrics = select_metrics(task_type)
+    display_summary(selected_dataset.name,
+                    input_features,
+                    target_feature,
+                    model_type,
+                    split_ratio,
+                    metrics)
+    (pipeline, result) = train_model(datasett,
+                                     features,
+                                     input_features,
+                                     target_feature,
+                                     model_type,
+                                     split_ratio,
+                                     metrics)
+    save_pipeline(pipeline)
+    if result:
+        print_result(result)
