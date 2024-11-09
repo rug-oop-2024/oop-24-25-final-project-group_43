@@ -45,9 +45,11 @@ class KNN(Model):
         :param np.ndarray observations: A ndarray that contains the feature data
         return: A ndarray that contains predicted labels for the provided observations.
         """
-        return [self._predict_single(x) for x in observations]
+        array = [[self._predict_single(x)] for x in observations]
+        array = np.array(array)
+        return array
 
-    def _predict_single(self, observation: np.ndarray) -> int:
+    def _predict_single(self, observation: np.ndarray) -> np.int64:
         """
         Predicts the label for a single observation.
 
@@ -55,15 +57,18 @@ class KNN(Model):
         return: The function returns an integer representing the predicted label for
             the given observation.
         """
+        x = self._observations
+        y = self._ground_truth
         # step 1: calculate the distance between the observation and all the
         # points in the training set
-        distances = np.linalg.norm(self._observations - observation, axis=1)
+        distances = np.linalg.norm(x - observation, axis=1)
         # step 2: sort the distances
         k_indices = np.argpartition(distances, self.k_value)[: self.k_value]
         # step 3 take the k first elements
-        k_nearest_labels = np.take(self._ground_truth, k_indices)
+        k_nearest_labels = np.take(y, k_indices).astype(np.int64)
         # step 4: take the majority vote and return the label
         return np.bincount(k_nearest_labels).argmax()
+        #return value
 
     def get_params(self) -> dict:
         """
