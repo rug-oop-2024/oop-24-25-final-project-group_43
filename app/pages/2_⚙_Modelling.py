@@ -35,56 +35,6 @@ selected_dataset_name = st.selectbox("Select a dataset",
 selected_dataset = next(dataset for dataset in datasets 
                         if dataset.name == selected_dataset_name)
 
-"""
-if st.button('Refresh Datasets'):
-    delete_datasets('path/to/datasets')
-    st.experimental_rerun()
-"""
-
-############################################################################################################
-# Styled code with the use of functions
-############################################################################################################
-"""
-def load_dataset():
-    st.write(f"Selected dataset: {selected_dataset.name}")
-
-    # Load the dataset (couldn't figure out how to load the dataset from the registry, 
-    # since it is a list of artifacts)
-    file_path = os.path.join('assets/objects/', selected_dataset.asset_path)
-    df = pd.read_csv(file_path)
-    st.write(df)
-    datasett = Dataset.from_dataframe(df, name=selected_dataset.name, 
-                                      asset_path=selected_dataset.asset_path)
-    features = detect_feature_types(datasett)
-
-    feature_names = [feature.name for feature in features]
-    
-    st.subheader("Feature Selection")
-
-    # Generate selection menus for input features and target feature
-    input_features = st.multiselect("Select input features", feature_names)
-    target_feature = st.selectbox("Select target feature", feature_names)
-    if input_features and target_feature:
-        determine_task_type()
-
-def determine_task_type():
-    if input_features and target_feature:
-    # Determine task type based on target feature
-        target_feature_type = next((feature.type for feature in features if 
-                                    feature.name == target_feature), None)
-        
-        if target_feature_type == 'numerical':
-            task_type = "regression"
-        else:
-            task_type = "classification"
-        
-        st.write(f"Detected task type: {task_type}")
-"""
-############################################################################################################
-# original code
-############################################################################################################
-
-
 if selected_dataset:
     st.write(f"Selected dataset: {selected_dataset.name}")
 
@@ -166,6 +116,12 @@ if selected_dataset:
             target_feature = next(feature for feature in features 
                                   if feature.name == target_feature)
             metrics = [get_metric(metric) for metric in metrics]
+            st.write(f"This is the metrics: {type(metrics)}")
+            st.write(f"This is the dataset: {type(datasett)}")
+            st.write(f"This is the model: {type(get_model(model_type))}")
+            st.write(f"This is the input features: {type(input_features)}")
+            st.write(f"This is the target feature: {type(target_feature)}")
+            st.write(f"This is the split ratio: {type(split_ratio)}")
             pipeline = Pipeline(metrics=metrics, dataset=datasett,
                                  model=get_model(model_type),
                                     input_features=input_features,
