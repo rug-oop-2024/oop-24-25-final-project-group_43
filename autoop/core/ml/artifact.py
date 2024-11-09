@@ -27,28 +27,12 @@ class Artifact(BaseModel,ABC):
             file.write(self.data)
 
     def read(self) -> bytes:
-        #with open(self.asset_path, 'rb') as file:
-        #    self.data = file.read()
-        #print(type(self.data))
         return self.data
 
+    def get(self, param: str) -> str:
+        if param == "type":
+            return self.type
 
-    # @property
-    # def get(self, param: str):
-    #     if param == "type":
-    #         return self.type
-    
-
-# with json you can convert the object to a string and then bytes and save it to a file
-# data should be in bytes
-# saved artifact should be in data
-
-# model.dump
-# What marco said about this class:
-# baseclass for all the logical objects in the pipeline
-# define an abstract method to dump the object to a file
-# we want to have files that refers to this specific type of attr
-# be able to save dataset, model, features
-# find what the attr mean by checking the requirements and specific code
-# very generic abstract class
-# manage all types of artifacts
+    def save_pipeline_artifact(self, name: str, version: str) -> None:
+        with open(f'pipelines/{name}_{version}.pkl', 'wb') as file:
+            file.write(self.data)

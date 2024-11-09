@@ -40,7 +40,6 @@ class Metric(ABC):
     @abstractmethod
     def evaluate(self, ground_truth: np.ndarray, prediction: np.ndarray) -> float:
         return self(ground_truth, prediction)
-    pass #?
 
 # add here concrete implementations of the Metric class
 

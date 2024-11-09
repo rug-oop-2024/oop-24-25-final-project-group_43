@@ -41,7 +41,7 @@ class Database():
             return None
         return self._data[collection].get(id, None)
     
-    def delete(self, collection: str, id: str):
+    def delete(self, collection: str, id: str) -> None:
         """Delete a key from the database
         Args:
             collection (str): The collection to delete the data from
@@ -60,7 +60,8 @@ class Database():
         Args:
             collection (str): The collection to list the data from
         Returns:
-            List[Tuple[str, dict]]: A list of tuples containing the id and data for each item in the collection
+            List[Tuple[str, dict]]: A list of tuples containing the id 
+            and data for each item in the collection
         """
         if not self._data.get(collection, None):
             return []
@@ -76,7 +77,8 @@ class Database():
             if not data:
                 continue
             for id, item in data.items():
-                self._storage.save(json.dumps(item).encode(), f"{collection}{os.sep}{id}")
+                self._storage.save(json.dumps(item).encode(),
+                                    f"{collection}{os.sep}{id}")
 
         # for things that were deleted, we need to remove them from the storage
         keys = self._storage.list("")

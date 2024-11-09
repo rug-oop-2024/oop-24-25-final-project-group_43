@@ -5,7 +5,7 @@ from autoop.core.ml.model.model import Model
 from autoop.core.ml.model.regression.multiple_linear_regression import MultipleLinearRegression
 
 class PolynomialRegression(Model):
-    def __init__(self, degree=2):
+    def __init__(self, degree: int=2) -> None:
         """
         Initializes the Polynomial Regression model with a specified degree.
 
@@ -24,7 +24,7 @@ class PolynomialRegression(Model):
         self.mlr = MultipleLinearRegression()  # Using MLR for the regression part
         self.type = "regression"
 
-    def fit(self, X: np.ndarray, y: np.ndarray):
+    def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         """
         Fit the polynomial regression model to the provided data.
         Parameters:
@@ -41,7 +41,7 @@ class PolynomialRegression(Model):
         # Fit the MLR model on the transformed features
         self.mlr.fit(X_poly, y)
 
-    def predict(self, X: np.ndarray):
+    def predict(self, X: np.ndarray) -> np.ndarray:
         """
         Predicts the target values for the given input features using the
           polynomial regression model.
@@ -56,7 +56,7 @@ class PolynomialRegression(Model):
         # Use the MLR model to predict
         return self.mlr.predict(X_poly)
 
-    def get_params(self):
+    def get_params(self) -> dict:
         """
         Retrieve the parameters of the polynomial regression model.
 
