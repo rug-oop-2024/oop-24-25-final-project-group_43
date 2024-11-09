@@ -3,6 +3,7 @@ import numpy as np
 from autoop.core.ml.model import Model
 from sklearn.linear_model import LogisticRegression
 
+
 class LogisticRegressionWrapper(Model):
     """
     It used the logistic regression model for training and predictions.
@@ -12,8 +13,10 @@ class LogisticRegressionWrapper(Model):
         """
         Initialize the Logistic Regression model.
 
-        param: penalty: The penalty to be used in the Logistic Regression model.
-        param: C: The regularization parameter for the Logistic Regression model.
+        param: penalty: The penalty to be used in the Logistic
+            Regression model.
+        param: C: The regularization parameter for the Logistic
+            Regression model.
         """
         super().__init__()
         self._model = LogisticRegression(penalty=penalty, C=C)
@@ -23,9 +26,10 @@ class LogisticRegressionWrapper(Model):
         """
         Trains the Logistic Regression model.
 
-        param: observations: A ndarray of the observations to train the model on.
-        param: ground_truth: A ndarray of the target values for the provided
-            observations.
+        param: observations: A ndarray of the observations to
+            train the model on.
+        param: ground_truth: A ndarray of the target values for
+            the provided observations.
         return: None
         """
         self._model.fit(observations, ground_truth)
@@ -39,10 +43,12 @@ class LogisticRegressionWrapper(Model):
 
     def predict(self, observations: np.ndarray) -> np.ndarray:
         """
-        Make predictions on new data using the fitted Logistic Regression model.
+        Make predictions on new data using the Logistic Regression model.
 
-        param: observations: A ndarray of the observations to make predictions on.
-        return: A ndarray of the predicted values for the provided observations.
+        param: observations: A ndarray of the observations
+            to make predictions on.
+        return: A ndarray of the predicted values for the
+            provided observations.
         """
         return self._model.predict(observations)
 

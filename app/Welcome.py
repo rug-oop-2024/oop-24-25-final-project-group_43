@@ -1,10 +1,11 @@
-
 import streamlit as st
 import sys
 import os
 
 # Ensure the autoop module is in the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                '../../')))
+
 
 from autoop.core.ml.artifact import Artifact
 
@@ -20,7 +21,3 @@ with open("README.md", "r", encoding="utf-8") as f:
     readme_content = f.read()
 
 st.markdown(readme_content)
-
-# Run the app with:
-# cd path/to/Welcome.py
-# streamlit run Welcome.py

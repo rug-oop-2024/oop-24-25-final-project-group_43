@@ -4,6 +4,7 @@ import numpy as np
 from autoop.core.ml.model.model import Model
 from sklearn.ensemble import RandomForestClassifier
 
+
 class RandomForest(Model):
     """
     Implements a Random Forest model for classification.
@@ -25,10 +26,10 @@ class RandomForest(Model):
         """
         Train the Random Forest model.
 
-        :param np.ndarray observations: A 2D numpy array where each row represents an
-            observation and each column represents a feature.
-        :param np.ndarray ground_truth: A 1D numpy array containing the ground truth
-            values for the observations.
+        :param np.ndarray observations: A 2D numpy array where each row
+            represents an observation and each column represents a feature.
+        :param np.ndarray ground_truth: A 1D numpy array containing
+            the ground truth values for the observations.
         return: None
         """
         self._model.fit(observations, ground_truth)
@@ -37,9 +38,10 @@ class RandomForest(Model):
         """
         Make predictions using the trained Random Forest model.
 
-        :param np.ndarray observations: A 2D numpy array where each row represents an
-            observation and each column represents a feature.
-        return: np.ndarray predictions: A 1D numpy array containing the predicted values
+        :param np.ndarray observations: A 2D numpy array where each row
+            represents an observation and each column represents a feature.
+        return: np.ndarray predictions: A 1D numpy array containing
+            the predicted values
         """
         return self._model.predict(observations)
 

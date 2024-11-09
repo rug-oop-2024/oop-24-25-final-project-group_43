@@ -6,7 +6,7 @@ from sklearn.linear_model import Lasso
 
 class LassoWrapper(Model):
     """
-    It provides an interface for training and making predictions using the Lasso model.
+    Trains and makes predictions using the Lasso model.
     """
 
     def __init__(self, alpha: int = 1) -> None:
@@ -23,7 +23,8 @@ class LassoWrapper(Model):
         """
         Trains the Lasso model.
 
-        param: observations: A ndarray of the observations to train the model on.
+        param: observations: A ndarray of the observations to
+            train the model on.
         param: ground_truth: A ndarray of the target values for the provided
             observations.
         return: None
@@ -41,8 +42,10 @@ class LassoWrapper(Model):
         """
         Make predictions on new data using the fitted Lasso model.
 
-        param: observations: A ndarray of the observations to make predictions on.
-        return: A ndarray of the predicted values for the provided observations.
+        param: observations: A ndarray of the observations
+            to make predictions on.
+        return: A ndarray of the predicted values for the
+            provided observations.
         """
         return self._model.predict(observations)
 

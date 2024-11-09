@@ -2,6 +2,7 @@ import numpy as np
 
 from autoop.core.ml.model.model import Model
 
+
 class KNN(Model):
     """
     Implements a K-Nearest Neigbors (KNN) model.
@@ -29,10 +30,11 @@ class KNN(Model):
         """
         Trains the model by storing the training data.
 
-        :param np.ndarray observations: A ndarray that contains the feature data
-            for the training model.
-        :param np.ndarray ground_truth: A ndarray that contains the corresponfing
-            categories for each observation in the training data.
+        :param np.ndarray observations: A ndarray that contains
+            the feature data for the training model.
+        :param np.ndarray ground_truth: A ndarray that contains
+            the corresponding categories for each observation
+            in the training data.
         return: None.
         """
         self._observations = observations
@@ -42,8 +44,10 @@ class KNN(Model):
         """
         Make predictions based on new observations.
 
-        :param np.ndarray observations: A ndarray that contains the feature data
-        return: A ndarray that contains predicted labels for the provided observations.
+        :param np.ndarray observations: A ndarray that contains the
+            feature data
+        return: A ndarray that contains predicted labels for the
+            provided observations.
         """
         array = [[self._predict_single(x)] for x in observations]
         array = np.array(array)
@@ -53,22 +57,17 @@ class KNN(Model):
         """
         Predicts the label for a single observation.
 
-        :param np.ndarray observation: A ndarray that contains the feature data
-        return: The function returns an integer representing the predicted label for
-            the given observation.
+        :param np.ndarray observation: A ndarray that contains the
+            feature data
+        return: The function returns an integer representing
+            the predicted label for the given observation.
         """
         x = self._observations
         y = self._ground_truth
-        # step 1: calculate the distance between the observation and all the
-        # points in the training set
         distances = np.linalg.norm(x - observation, axis=1)
-        # step 2: sort the distances
         k_indices = np.argpartition(distances, self.k_value)[: self.k_value]
-        # step 3 take the k first elements
         k_nearest_labels = np.take(y, k_indices).astype(np.int64)
-        # step 4: take the majority vote and return the label
         return np.bincount(k_nearest_labels).argmax()
-        #return value
 
     def get_params(self) -> dict:
         """

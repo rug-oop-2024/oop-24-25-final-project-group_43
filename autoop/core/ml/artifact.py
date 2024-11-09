@@ -3,9 +3,10 @@ import base64
 from typing import Literal, Optional
 import pandas as pd
 import pickle
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
 
-class Artifact(BaseModel,ABC):
+
+class Artifact(BaseModel, ABC):
     type: str
     name: str
     asset_path: str
@@ -17,7 +18,8 @@ class Artifact(BaseModel,ABC):
     @property
     def id(self) -> str:
         # Encode the asset_path in base64
-        path = base64.b64encode(self.asset_path.encode('ascii')).decode('ascii')
+        path = base64.b64encode(self.asset_path.
+                                encode('ascii')).decode('ascii')
         full_path = f"{path}_{self.version}".replace("=", "_")
         print(full_path)
         return full_path

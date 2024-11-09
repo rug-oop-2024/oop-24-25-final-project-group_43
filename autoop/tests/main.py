@@ -4,7 +4,8 @@ import sys
 import os
 
 # Ensure the autoop module is in the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                '../../')))
 
 from autoop.tests.test_database import TestDatabase
 from autoop.tests.test_storage import TestStorage
