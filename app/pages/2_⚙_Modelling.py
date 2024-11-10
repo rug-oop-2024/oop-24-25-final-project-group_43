@@ -4,6 +4,8 @@ from autoop.core.ml.pipeline import Pipeline
 from autoop.core.ml.model import get_model
 from app.core.system import AutoMLSystem
 from autoop.core.ml.dataset import Dataset
+from autoop.core.ml.dataset import Artifact
+
 
 import streamlit as st
 import pandas as pd
@@ -103,10 +105,10 @@ def select_metrics(task_type: str) -> List[str]:
     return metrics
 
 
-def display_summary(selected_dataset_name: str, input_features: List[str],
+def show_summary(selected_dataset_name: str, input_features: List[str],
                     target_feature: str | int | float, model_type: str,
                     split_ratio: float, metrics: List[str]) -> None:
-    if st.button("Show Summary"):
+    if st.checkbox("Show Summary"):
         st.write(f"Selected dataset: {selected_dataset_name}")
         st.write(f"Selected input features: {input_features}")
         st.write(f"Selected target feature: {target_feature}")
@@ -115,45 +117,53 @@ def display_summary(selected_dataset_name: str, input_features: List[str],
         st.write(f"Selected metrics: {metrics}")
 
 
-def train_model(datasett: Dataset, features: List[str],
+def get_pipeline(datasett: Dataset, features: List[str],
                 input_features: List[str],
                 target_feature: str | int | float, model_type: str,
                 split_ratio: float,
-                metrics: List[str]) -> tuple[Pipeline, dict]:
-    if st.button("Train Model"):
-        st.write("Training model...")
-        input_features = [
-            next(feature for feature in features if
-                 feature.name == feature_name)
-            for feature_name in input_features
-        ]
-        target_feature = next(
-            feature for feature in features if feature.name == target_feature
-        )
-        metrics = [get_metric(metric) for metric in metrics]
-        pipeline = Pipeline(
-            metrics=metrics,
-            dataset=datasett,
-            model=get_model(model_type),
-            input_features=input_features,
-            target_feature=target_feature,
-            split=split_ratio
-        )
-        result = pipeline.execute()
-        st.write("Model trained successfully.")
-        return pipeline, result
+                metrics: List[str]) -> Pipeline: #tuple[Pipeline, dict]:
+    #if st.button("Train Model"):
+    st.write("Training model...")
+    input_features = [
+        next(feature for feature in features if
+                feature.name == feature_name)
+        for feature_name in input_features
+    ]
+    target_feature = next(
+        feature for feature in features if feature.name == target_feature
+    )
+    metrics = [get_metric(metric) for metric in metrics]
+    pipeline = Pipeline(
+        metrics=metrics,
+        dataset=datasett,
+        model=get_model(model_type),
+        input_features=input_features,
+        target_feature=target_feature,
+        split=split_ratio
+    )
+    pipeline.execute()
+    st.write("Model trained successfully.")
+    return pipeline
 
 
 def save_pipeline(pipeline: Pipeline) -> None:
+    #if st.button("Save Pipeline"):
+    pipeline_name = st.text_input("Enter pipeline name")
+    pipeline_version = st.text_input("Enter pipeline version")
     if st.button("Save Pipeline"):
-        pipeline_name = st.text_input("Enter pipeline name")
-        pipeline_version = st.text_input("Enter pipeline version")
-        if st.button("Save Pipeline"):
-            st.write("Saving pipeline...")
-            for artifact in pipeline.artifacts:
-                artifact.save_pipeline_artifact(pipeline_name,
-                                                pipeline_version)
-            st.write("Pipeline saved successfully.")
+        st.write("Saving pipeline...")
+        pipeline_artifact = Artifact.from_pipeline(
+            cls=Artifact,
+            type="pipeline",
+            name=pipeline_name,
+            asset_path=f'pipelines/{pipeline_name}_{pipeline_version}.pkl',
+            version=pipeline_version,
+            tags=None,
+            data=pipeline,
+            metadata=None
+        )
+        automl.registry.register(pipeline_artifact)
+        st.write("Pipeline saved successfully.")
 
 
 def print_result(result: dict) -> None:
@@ -184,35 +194,47 @@ def print_result(result: dict) -> None:
 
 
 st.subheader("Dataset Selection")
-selected_dataset = select_dataset(datasets)
-datasett = load_dataset(selected_dataset)
-features = load_features(datasett)
 
-feature_names = [feature.name for feature in features]
-st.subheader("Feature Selection")
-input_features = st.multiselect("Select input features", feature_names)
-target_feature = st.selectbox("Select target feature", feature_names)
+if datasets:
+    selected_dataset = select_dataset(datasets)
+    st.markdown("---")
+    if selected_dataset:
+        datasett = load_dataset(selected_dataset)
+        features = load_features(datasett)
+        feature_names = [feature.name for feature in features]
+        st.markdown("---")
+        if feature_names:
+            st.subheader("Feature Selection")
+            input_features = st.multiselect("Select input features", feature_names)
+            target_feature = st.selectbox("Select target feature", feature_names)
+            if input_features and target_feature:
+                task_type = determine_task_type(input_features,
+                                                target_feature,
+                                                features)     
+                model_type = select_model(task_type)
+                split_ratio = split_data()
+                metrics = select_metrics(task_type)
+                show_summary(selected_dataset.name,
+                                          input_features,
+                                          target_feature,
+                                          model_type,
+                                          split_ratio,
+                                          metrics)
+                if split_ratio and metrics:
+                    pipeline = get_pipeline(datasett, features, input_features,
+                                            target_feature, model_type, split_ratio,
+                                            metrics)
+                    if pipeline:
+                        print_result(pipeline.execute())
+                        save_pipeline(pipeline)
+                        
+else:
+    st.warning("There are no Datasets available, "
+             "please upload a Dataset in the Datasets page")
 
-if input_features and target_feature:
-    task_type = determine_task_type(input_features,
-                                    target_feature,
-                                    features)
-    model_type = select_model(task_type)
-    split_ratio = split_data()
-    metrics = select_metrics(task_type)
-    display_summary(selected_dataset.name,
-                    input_features,
-                    target_feature,
-                    model_type,
-                    split_ratio,
-                    metrics)
-    (pipeline, result) = train_model(datasett,
-                                     features,
-                                     input_features,
-                                     target_feature,
-                                     model_type,
-                                     split_ratio,
-                                     metrics)
-    save_pipeline(pipeline)
-    if result:
-        print_result(result)
+
+
+
+
+
+
