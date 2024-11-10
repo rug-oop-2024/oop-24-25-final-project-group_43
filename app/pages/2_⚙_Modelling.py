@@ -191,15 +191,21 @@ def get_pipeline(datasett: Dataset, features: List[str],
                  split_ratio: float,
                  metrics: List[str]) -> Pipeline:
     """
-    Trains a machine learning model using the provided dataset and parameters, and returns the resulting pipeline.
+    Trains a machine learning model using the provided dataset and parameters,
+        and returns the resulting pipeline.
     Args:
         datasett (Dataset): The dataset to be used for training the model.
-        features (List[str]): A list of feature names available in the dataset.
-        input_features (List[str]): A list of feature names to be used as input features for the model.
-        target_feature (str | int | float): The name of the target feature to be predicted by the model.
+        features (List[str]): A list of feature names available
+                                in the dataset.
+        input_features (List[str]): A list of feature names
+                                to be used as input features for the model.
+        target_feature (str | int | float): The name of the target feature
+                                to be predicted by the model.
         model (str): The name of the model to be used for training.
-        split_ratio (float): The ratio to split the dataset into training and testing sets.
-        metrics (List[str]): A list of metric names to evaluate the model's performance.
+        split_ratio (float): The ratio to split the
+            dataset into training and testing sets.
+        metrics (List[str]): A list of metric names
+            to evaluate the model's performance.
     Returns:
         Pipeline: The trained machine learning pipeline.
     """   
@@ -227,7 +233,8 @@ def get_pipeline(datasett: Dataset, features: List[str],
 
 def save_pipeline(pipeline: Pipeline) -> None:
     """
-    Prompts the user to enter a pipeline name and version, and saves the given pipeline
+    Prompts the user to enter a pipeline name and version,
+        and saves the given pipeline
     as an artifact with the specified name and version.
 
     Args:
@@ -256,12 +263,15 @@ def save_pipeline(pipeline: Pipeline) -> None:
 
 def print_result(result: dict) -> None:
     """
-    Prints the metrics, training metrics, and predictions from the result dictionary.
+    Prints the metrics, training metrics, and predictions from the
+        result dictionary.
 
     Args:
         result (dict): A dictionary containing the following keys:
-            - "metrics": A list of tuples where each tuple contains a metric name and its value.
-            - "metrics_train": A list of tuples where each tuple contains a training metric name and its value.
+            - "metrics": A list of tuples where each tuple contains a
+                metric name and its value.
+            - "metrics_train": A list of tuples where each tuple
+                contains a training metric name and its value.
             - "predictions": The predictions to be printed.
 
     Returns:
