@@ -1,3 +1,6 @@
+"""
+Creates an Artifact class that represents a machine learning artifact.
+"""
 from pydantic import BaseModel
 import base64
 from typing import Optional
@@ -6,9 +9,8 @@ from abc import ABC
 
 
 class Artifact(BaseModel, ABC):
-    """
-    Artifact class representing a machine learning artifact.
-    """
+    """Artifact class representing a machine learning artifact."""
+
     type: str
     name: str
     asset_path: str
@@ -19,9 +21,9 @@ class Artifact(BaseModel, ABC):
 
     @property
     def id(self) -> str:
+
         """
-        Generates a unique identifier for the artifact by encoding the
-        asset path in base64 and appending the version number.
+        Generates a identifier for the artifact.
 
         Returns:
             str: The unique identifier for the artifact,
@@ -38,7 +40,7 @@ class Artifact(BaseModel, ABC):
 
     def save(self, data: bytes) -> bytes:
         """
-        Save the given data to the file specified by asset_path.
+        Saves the given data to the file specified by asset_path.
 
         Args:
             data (bytes): The data to be written to the file.

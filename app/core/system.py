@@ -6,6 +6,24 @@ from typing import List
 
 
 class ArtifactRegistry():
+    """
+    A class to manage the registration, retrieval, listing, and deletion
+    of artifacts.
+    Attributes:
+        database (Database): The database instance to store artifact metadata.
+        storage (Storage): The storage instance to save artifact data.
+    Methods:
+        register(artifact: Artifact):
+            Registers a new artifact by saving its data in storage and its
+            metadata in the database.
+        list(type: str = None) -> List[Artifact]:
+            Lists all artifacts, optionally filtered by type.
+        get(artifact_id: str) -> Artifact:
+            Retrieves an artifact by its ID.
+        delete(artifact_id: str):
+            Deletes an artifact by its ID, removing both its data from storage
+            and its metadata from the database.
+    """
     def __init__(self,
                  database: Database,
                  storage: Storage):
