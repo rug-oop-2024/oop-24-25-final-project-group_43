@@ -78,9 +78,33 @@ Pipeline(
         return artifacts
 
     def _register_artifact(self, name: str, artifact):
+        """
+        Registers an artifact with a given name.
+
+        Args:
+            name (str): The name to register the artifact under.
+            artifact: The artifact to be registered.
+        """
         self._artifacts[name] = artifact
 
     def _preprocess_features(self):
+        """
+        Preprocesses the features of the dataset.
+
+        This method preprocesses both the target feature and
+        input features of the dataset.
+        It registers artifacts for each feature and stores
+        the preprocessed data.
+
+        Steps:
+        1. Preprocess the target feature and register its artifact.
+        2. Preprocess the input features and register their artifacts.
+        3. Store the preprocessed target data in `_output_vector`.
+        4. Store the preprocessed input data in `_input_vectors`.
+
+        Returns:
+            None
+        """
         (target_feature_name, target_data, artifact) = \
             preprocess_features([self._target_feature], self._dataset)[0]
         self._register_artifact(target_feature_name, artifact)
@@ -94,6 +118,29 @@ Pipeline(
                                          artifact) in input_results]
 
     def _split_data(self):
+        """
+        Splits the input and output data into training and testing
+        sets based on the specified split ratio.
+
+        This method divides the input vectors and output vector
+        into training and testing subsets.
+        The split ratio is determined by the `self._split`
+        attribute.
+
+        Attributes:
+            self._input_vectors (list of lists): The input data to be split.
+            self._output_vector (list): The output data to be split.
+            self._split (float): The ratio to split the data into
+                training and testing sets.
+
+        Sets:
+            self._train_x (list of lists): The training subset of
+                the input data.
+            self._test_x (list of lists): The testing subset of
+                the input data.
+            self._train_y (list): The training subset of the output data.
+            self._test_y (list): The testing subset of the output data.
+        """
         # Split the data into training and testing sets
         split = self._split
         self._train_x = [vector[:int(split * len(vector))] for vector
@@ -106,14 +153,51 @@ Pipeline(
                                                len(self._output_vector)):]
 
     def _compact_vectors(self, vectors: List[np.array]) -> np.array:
+        """
+        Concatenates a list of numpy arrays along the second axis (axis=1).
+
+        Args:
+            vectors (List[np.array]): A list of numpy arrays
+            to be concatenated.
+
+        Returns:
+            np.array: A single numpy array resulting from the
+            concatenation of the input arrays.
+        """
         return np.concatenate(vectors, axis=1)
 
     def _train(self):
+        """
+        Trains the model using the training data.
+
+        This method compacts the feature vectors from the training
+        data and fits the model using the compacted feature vectors
+        and the corresponding target values.
+
+        Returns:
+            None
+        """
         X = self._compact_vectors(self._train_x)
         Y = self._train_y
         self._model.fit(X, Y)
 
     def _evaluate(self) -> None:
+        """
+        Evaluates the model using the test data and computes
+        the specified metrics.
+
+        This method performs the following steps:
+        1. Compacts the test feature vectors.
+        2. Uses the model to predict the target values based on the
+            compacted test features.
+        3. Evaluates the predictions using each metric in the metrics list.
+        4. Stores the results of each metric evaluation in the
+            metrics_results list.
+        5. Stores the predictions in the predictions attribute.
+
+        Returns:
+            None
+        """
         X = self._compact_vectors(self._test_x)
         Y = self._test_y
         self._metrics_results = []
