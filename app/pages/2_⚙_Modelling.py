@@ -30,11 +30,13 @@ datasets = automl.registry.list(type="dataset")
 def select_dataset(datasets: list) -> Dataset:
     selected_dataset_name = st.selectbox("Select a dataset",
                                          [dataset.name for dataset in
-                                          datasets])
-    selected_dataset = next(dataset for dataset in datasets
-                            if dataset.name == selected_dataset_name)
-    return selected_dataset
-
+                                          datasets], index = None, placeholder = '')
+    if selected_dataset_name is not None:
+        selected_dataset = next(dataset for dataset in datasets
+                                if dataset.name == selected_dataset_name)
+        return selected_dataset
+    else:
+        st.info("Please select a dataset to proceed.")
 
 def load_dataset(selected_dataset: Dataset) -> Dataset:
     st.write(f"Selected dataset: {selected_dataset.name}")
@@ -63,25 +65,25 @@ def determine_task_type(input_features: List[str],
         else:
             task_type = "classification"
 
-        st.write(f"Detected task type: {task_type}")
+        st.info(f"Detected task type: {task_type}")
         return task_type
 
 
-def select_model(task_type: str) -> str:
+def select_model(task_type: str) -> str | List[str]:
     st.subheader("Model Selection")
     if task_type == "classification":
-        model_type = st.selectbox("Select a "
+        model = st.selectbox("Select a "
                                   "classification model",
                                   ["KNN",
                                    "Logistic Regression",
-                                   "Random Forest"])
+                                   "Random Forest"], index = 0, placeholder = 'None')
     elif task_type == "regression":
-        model_type = st.selectbox("Select a "
+        model = st.selectbox("Select a "
                                   "regression model",
                                   ["Lasso",
                                    "Multiple Linear Regression",
-                                   "Polynomial Regression"])
-    return model_type
+                                   "Polynomial Regression"], index = 0, placeholder = 'None')
+    return model
 
 
 def split_data() -> float:
@@ -95,12 +97,12 @@ def select_metrics(task_type: str) -> List[str]:
     st.subheader("Metrics Selection")
     if task_type == "classification":
         metrics = st.multiselect("Select metrics for classification",
-                                 ["Accuracy", "Recall", "Precision"])
+                                 ["Accuracy", "Recall", "Precision"], default=None, placeholder = '')
     elif task_type == "regression":
         metrics = st.multiselect("Select metrics for regression",
                                  ["Mean Squared Error",
                                   "Root Mean Squared Error",
-                                  "Mean Absolute Error"])
+                                  "Mean Absolute Error"], default=None, placeholder = '')
     return metrics
 
 
@@ -118,7 +120,7 @@ def show_summary(selected_dataset_name: str, input_features: List[str],
 
 def get_pipeline(datasett: Dataset, features: List[str],
                  input_features: List[str],
-                 target_feature: str | int | float, model_type: str,
+                 target_feature: str | int | float, model: str,
                  split_ratio: float,
                  metrics: List[str]) -> Pipeline:
     st.write("Training model...")
@@ -134,7 +136,7 @@ def get_pipeline(datasett: Dataset, features: List[str],
     pipeline = Pipeline(
         metrics=metrics,
         dataset=datasett,
-        model=get_model(model_type),
+        model=get_model(model),
         input_features=input_features,
         target_feature=target_feature,
         split=split_ratio
@@ -198,34 +200,50 @@ if datasets:
         if feature_names:
             st.subheader("Feature Selection")
             input_features = st.multiselect("Select input features",
-                                            feature_names)
+                                            feature_names, default = None, placeholder = '')
             target_feature = st.selectbox("Select target feature",
-                                          feature_names)
+                                          feature_names, index = None, placeholder='')
             if input_features and target_feature:
                 task_type = determine_task_type(input_features,
                                                 target_feature,
                                                 features)
-                model_type = select_model(task_type)
+                model = select_model(task_type)
                 split_ratio = split_data()
                 metrics = select_metrics(task_type)
                 show_summary(selected_dataset.name,
                              input_features,
                              target_feature,
-                             model_type,
+                             model,
                              split_ratio,
                              metrics)
-                if split_ratio and metrics:
+                if split_ratio and metrics and model and st.button("Create Pipeline"):
+                    # pipeline = get_pipeline(datasett,
+                    #                         features,
+                    #                         input_features,
+                    #                         target_feature,
+                    #                         model,
+                    #                         split_ratio,
+                    #                         metrics)
                     pipeline = get_pipeline(datasett,
                                             features,
                                             input_features,
                                             target_feature,
-                                            model_type,
+                                            model,
                                             split_ratio,
                                             metrics)
+                    
                     if pipeline:
+                        print(model, pipeline)
                         print_result(pipeline.execute())
+                        st.markdown("---")
+                        st.write(pipeline.execute())
+                        st.markdown("---")
                         save_pipeline(pipeline)
 
 else:
     st.warning("There are no Datasets available, "
                "please upload a Dataset in the Datasets page")
+
+
+
+

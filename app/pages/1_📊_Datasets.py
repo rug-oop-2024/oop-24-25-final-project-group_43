@@ -22,7 +22,6 @@ def upload_dataset() -> None:
                                          asset_path=f'datasets/{file.name}')
         automl.registry.register(dataset)
         st.success("Dataset uploaded successfully.")
-        st.rerun()
 
 
 automl = AutoMLSystem.get_instance()
@@ -41,7 +40,7 @@ if datasets:
 
     if st.button("Delete Dataset"):
         automl.registry.delete(selected_dataset.id)
-        st.rerun()
+        st.success("Dataset deleted successfully.")
 else:
     st.write("## No datasets available.")
     st.subheader("Upload your dataset to get started.")
