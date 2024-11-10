@@ -42,8 +42,8 @@ class Dataset(Artifact):
             pd.DataFrame: A DataFrame containing the data read from
             the source.
         """
-        bytes = super().read()
-        csv = bytes.decode()
+        data_bytes = super().read()
+        csv = data_bytes.decode()
         return pd.read_csv(io.StringIO(csv))
 
     def save(self, data: pd.DataFrame) -> bytes:
@@ -57,5 +57,5 @@ class Dataset(Artifact):
         Returns:
             bytes: The bytes representation of the CSV file.
         """
-        bytes = data.to_csv(index=False).encode()
-        return super().save(bytes)
+        data_bytes = data.to_csv(index=False).encode()
+        return super().save(data_bytes)

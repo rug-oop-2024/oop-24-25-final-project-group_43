@@ -9,7 +9,7 @@ METRICS = [
     "accuracy",  # classification
     "recall",  # classification
     "precision",  # classification
-]  # add the names (in strings) of the metrics you implement
+]
 
 
 def get_metric(name: str) -> Any:
@@ -64,7 +64,6 @@ class Metric(ABC):
         """
         self.evaluate(ground_truth, prediction)
 
-    # add here the evaluate method
     @abstractmethod
     def evaluate(self, ground_truth: np.ndarray,
                  prediction: np.ndarray) -> float:
@@ -82,6 +81,7 @@ class Metric(ABC):
 
 
 class MeanSquaredError(Metric):
+    """Mean Squared Error metric."""
     def evaluate(self, ground_truth: np.ndarray,
                  prediction: np.ndarray) -> float:
         """
@@ -100,6 +100,7 @@ class MeanSquaredError(Metric):
 
 
 class RootMeanSquaredError(Metric):
+    """Root Mean Squared Error metric."""
     def evaluate(self, ground_truth: np.ndarray,
                  prediction: np.ndarray) -> float:
         """
@@ -118,6 +119,7 @@ class RootMeanSquaredError(Metric):
 
 
 class MeanAbsoluteError(Metric):
+    """Mean Absolute Error metric."""
     def evaluate(self, ground_truth: np.ndarray,
                  prediction: np.ndarray) -> float:
         """
@@ -136,6 +138,7 @@ class MeanAbsoluteError(Metric):
 
 
 class Accuracy(Metric):
+    """Accuracy metric."""
     def evaluate(self, ground_truth: np.ndarray,
                  prediction: np.ndarray) -> float:
         """
@@ -152,6 +155,7 @@ class Accuracy(Metric):
 
 
 class Recall(Metric):
+    """Recall metric."""
     def evaluate(self, ground_truth: np.ndarray,
                  prediction: np.ndarray) -> float:
         """
@@ -173,6 +177,7 @@ class Recall(Metric):
 
 
 class Precision(Metric):
+    """Precision metric."""
     def evaluate(self, ground_truth: np.ndarray,
                  prediction: np.ndarray) -> float:
         """

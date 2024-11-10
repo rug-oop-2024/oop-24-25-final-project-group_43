@@ -73,7 +73,8 @@ class Artifact(BaseModel, ABC):
         if param == "type":
             return self.type
 
-    def from_pipeline(cls,
+    def from_pipeline(self,
+                      cls,
                       type: str,
                       name: str,
                       asset_path: str,
@@ -81,6 +82,21 @@ class Artifact(BaseModel, ABC):
                       tags,
                       data: object,
                       metadata) -> 'Artifact':
+        """
+        Create an Artifact instance from a pipeline.
+
+        Args:
+            type (str): The type of the artifact.
+            name (str): The name of the artifact.
+            asset_path (str): The path to the asset.
+            version (str): The version of the artifact.
+            tags: Tags associated with the artifact.
+            data (object): The data to be serialized and stored in the artifact.
+            metadata: Additional metadata for the artifact.
+
+        Returns:
+            Artifact: An instance of the Artifact class.
+        """
         return cls(
             type=type,
             name=name,
@@ -91,4 +107,10 @@ class Artifact(BaseModel, ABC):
             metadata=metadata)
 
     def to_pipeline(self) -> object:
+        """
+        Deserializes the stored data into a pipeline object.
+
+        Returns:
+            object: The deserialized pipeline object.
+        """
         return pickle.loads(self.data)

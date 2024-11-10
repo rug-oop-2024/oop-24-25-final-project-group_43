@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
-from autoop.core.ml.artifact import Artifact
 import numpy as np
-from copy import deepcopy
 from typing import Literal
 
 
@@ -30,7 +28,8 @@ class Model(ABC):
         pass
 
     @abstractmethod
-    def predict(self, observations: np.ndarray) -> np.ndarray:
+    def predict(self, observations:
+                Literal[np.ndarray]) -> np.ndarray:  # type: ignore
         """
         Predict the output for given observations.
 

@@ -120,8 +120,7 @@ def get_pipeline(datasett: Dataset, features: List[str],
                  input_features: List[str],
                  target_feature: str | int | float, model_type: str,
                  split_ratio: float,
-                 metrics: List[str]) -> Pipeline:  # tuple[Pipeline, dict]:
-    # if st.button("Train Model"):
+                 metrics: List[str]) -> Pipeline:
     st.write("Training model...")
     input_features = [
         next(feature for feature in features if
@@ -146,7 +145,6 @@ def get_pipeline(datasett: Dataset, features: List[str],
 
 
 def save_pipeline(pipeline: Pipeline) -> None:
-    # if st.button("Save Pipeline"):
     pipeline_name = st.text_input("Enter pipeline name")
     pipeline_version = st.text_input("Enter pipeline version")
     if st.button("Save Pipeline"):

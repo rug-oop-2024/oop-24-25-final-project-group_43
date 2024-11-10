@@ -96,9 +96,9 @@ Pipeline(
     def _split_data(self):
         # Split the data into training and testing sets
         split = self._split
-        self._train_X = [vector[:int(split * len(vector))] for vector
+        self._train_x = [vector[:int(split * len(vector))] for vector
                          in self._input_vectors]
-        self._test_X = [vector[int(split * len(vector)):] for vector
+        self._test_x = [vector[int(split * len(vector)):] for vector
                         in self._input_vectors]
         self._train_y = self._output_vector[:int(split *
                                                  len(self._output_vector))]
@@ -109,12 +109,12 @@ Pipeline(
         return np.concatenate(vectors, axis=1)
 
     def _train(self):
-        X = self._compact_vectors(self._train_X)
+        X = self._compact_vectors(self._train_x)
         Y = self._train_y
         self._model.fit(X, Y)
 
     def _evaluate(self) -> None:
-        X = self._compact_vectors(self._test_X)
+        X = self._compact_vectors(self._test_x)
         Y = self._test_y
         self._metrics_results = []
         predictions = self._model.predict(X)
@@ -124,7 +124,7 @@ Pipeline(
         self._predictions = predictions
 
     def _evaluate_train(self) -> List:
-        X = self._compact_vectors(self._train_X)
+        X = self._compact_vectors(self.x_train_X)
         Y = self._train_y
         self._metrics_results_train = []
         predictions = self._model.predict(X)
