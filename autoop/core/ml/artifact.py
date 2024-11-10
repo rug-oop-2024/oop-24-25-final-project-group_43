@@ -73,12 +73,19 @@ class Artifact(BaseModel, ABC):
         if param == "type":
             return self.type
 
-    def from_pipeline(cls, type: str, name: str, asset_path: str, version: str, tags, data: object, metadata) -> 'Artifact':
+    def from_pipeline(cls,
+                      type: str,
+                      name: str,
+                      asset_path: str,
+                      version: str,
+                      tags,
+                      data: object,
+                      metadata) -> 'Artifact':
         return cls(
             type=type,
             name=name,
             asset_path=asset_path,
-            version = version,
+            version=version,
             tags=tags,
             data=pickle.dumps(data),
             metadata=metadata)

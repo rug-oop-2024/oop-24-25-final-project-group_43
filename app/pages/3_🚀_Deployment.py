@@ -1,10 +1,6 @@
 from app.core.system import AutoMLSystem
 from autoop.core.ml.pipeline import Pipeline
 from autoop.core.ml.artifact import Artifact
-import pandas as pd
-
-
-
 
 import streamlit as st
 
@@ -33,13 +29,11 @@ def select_pipeline(pipelines: list) -> Artifact:
 
 
 def load_pipeline(selected_pipeline: Artifact) -> Pipeline:
-    st.write(f"Selected pipeline: {selected_pipeline.name}")    
+    st.write(f"Selected pipeline: {selected_pipeline.name}")
     pipeline = selected_pipeline.to_pipeline()
     st.write(pipeline)
     st.write(selected_pipeline)
 
 
-
 selected_pipeline = select_pipeline(pipelines)
 pipeline = load_pipeline(selected_pipeline)
-
