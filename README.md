@@ -172,10 +172,10 @@ If you did not implement the feature
 | `ST/modelling/pipeline/split`         | FN           |       David          |    X    | |
 | `ST/modelling/pipeline/metrics`       | FN           |       David          |    X    | |
 | `ST/modelling/pipeline/summary`       | FN           |       David          |    X    | |
-| `ST/modelling/pipeline/train`         | FN           |       David          |         | |
-| `ST/modelling/pipeline/save`          | FN           |                      |         | |
-| `ST/page/deployment`                  | FN           |                      |         | |
-| `ST/deployment/load`                  | FN           |                      |         | |
+| `ST/modelling/pipeline/train`         | FN           |       David          |    X    | |
+| `ST/modelling/pipeline/save`          | FN           |       David          |    X    | |
+| `ST/page/deployment`                  | FN           |       David          |    X    | |
+| `ST/deployment/load`                  | FN           |       David          |    X    | |
 | `ST/deployment/predict`               | FN           |                      |         | |
 
 If you add extra features, please indicate them below:
