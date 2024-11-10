@@ -233,8 +233,7 @@ if datasets:
                                  model,
                                  split_ratio,
                                  metrics)
-                if split_ratio and metrics and model and \
-                        st.button("Train Model"):
+                if split_ratio and metrics and model:
                     pipeline = get_pipeline(datasett,
                                             features,
                                             input_features,
@@ -243,9 +242,9 @@ if datasets:
                                             split_ratio,
                                             metrics)
                     if pipeline:
-                        print_result(pipeline.execute())
-                        st.write(pipeline.execute())
-                        save_pipeline(pipeline)
+                        if st.checkbox("Show Results"):
+                            print_result(pipeline.execute())
+                            save_pipeline(pipeline)
 
 else:
     st.warning("There are no Datasets available, "
