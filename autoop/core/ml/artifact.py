@@ -73,16 +73,15 @@ class Artifact(BaseModel, ABC):
         if param == "type":
             return self.type
 
-    def save_pipeline_artifact(self, name: str, version: str) -> None:
-        """
-        Save the pipeline artifact to a file.
+    def from_pipeline(cls, type: str, name: str, asset_path: str, version: str, tags, data: object, metadata) -> 'Artifact':
+        return cls(
+            type=type,
+            name=name,
+            asset_path=asset_path,
+            version = version,
+            tags=tags,
+            data=pickle.dumps(data),
+            metadata=metadata)
 
-        Args:
-            name (str): The name of the pipeline.
-            version (str): The version of the pipeline.
-
-        Returns:
-            None
-        """
-        with open(f'pipelines/{name}_{version}.pkl', 'wb') as file:
-            file.write(self.data)
+    def to_pipeline(self) -> object:
+        return pickle.loads(self.data)
