@@ -30,9 +30,7 @@ datasets = automl.registry.list(type="dataset")
 def select_dataset(datasets: list) -> Dataset:
     selected_dataset_name = st.selectbox("Select a dataset",
                                          [dataset.name for dataset in
-                                          datasets],
-                                         index=None,
-                                         placeholder='')
+                                          datasets])
     if selected_dataset_name is not None:
         selected_dataset = next(dataset for dataset in datasets
                                 if dataset.name == selected_dataset_name)
@@ -244,6 +242,8 @@ if datasets:
                     if pipeline:
                         if st.checkbox("Show Results"):
                             print_result(pipeline.execute())
+
+                        if st.checkbox("Save Pipeline"):
                             save_pipeline(pipeline)
 
 else:
