@@ -59,22 +59,9 @@ class Artifact(BaseModel, ABC):
         """
         return self.data
 
-    def get(self, param: str) -> str:
-        """
-        Retrieve the value of a specified parameter.
 
-        Args:
-            param (str): The name of the parameter to retrieve.
-
-        Returns:
-            str: The value of the specified parameter if it exists,
-            otherwise None.
-        """
-        if param == "type":
-            return self.type
-
-    def from_pipeline(self,
-                      cls,
+    @staticmethod
+    def from_pipeline(cls,
                       type: str,
                       name: str,
                       asset_path: str,
