@@ -30,13 +30,16 @@ datasets = automl.registry.list(type="dataset")
 def select_dataset(datasets: list) -> Dataset:
     selected_dataset_name = st.selectbox("Select a dataset",
                                          [dataset.name for dataset in
-                                          datasets], index = None, placeholder = '')
+                                          datasets],
+                                         index=None,
+                                         placeholder='')
     if selected_dataset_name is not None:
         selected_dataset = next(dataset for dataset in datasets
                                 if dataset.name == selected_dataset_name)
         return selected_dataset
     else:
         st.info("Please select a dataset to proceed.")
+
 
 def load_dataset(selected_dataset: Dataset) -> Dataset:
     st.write(f"Selected dataset: {selected_dataset.name}")
@@ -73,16 +76,20 @@ def select_model(task_type: str) -> str:
     st.subheader("Model Selection")
     if task_type == "classification":
         model = st.selectbox("Select a "
-                                  "classification model",
-                                  ["KNN",
-                                   "Logistic Regression",
-                                   "Random Forest"], index = 0, placeholder = 'None')
+                             "classification model",
+                             ["KNN",
+                              "Logistic Regression",
+                              "Random Forest"],
+                             index=0,
+                             placeholder='None')
     elif task_type == "regression":
         model = st.selectbox("Select a "
-                                  "regression model",
-                                  ["Lasso",
-                                   "Multiple Linear Regression",
-                                   "Polynomial Regression"], index = 0, placeholder = 'None')
+                             "regression model",
+                             ["Lasso",
+                              "Multiple Linear Regression",
+                              "Polynomial Regression"],
+                             index=0,
+                             placeholder='None')
     return model
 
 
@@ -97,12 +104,14 @@ def select_metrics(task_type: str) -> List[str]:
     st.subheader("Metrics Selection")
     if task_type == "classification":
         metrics = st.multiselect("Select metrics for classification",
-                                 ["Accuracy", "Recall", "Precision"], default=None, placeholder = '')
+                                 ["Accuracy", "Recall", "Precision"],
+                                 default=None, placeholder='')
     elif task_type == "regression":
         metrics = st.multiselect("Select metrics for regression",
                                  ["Mean Squared Error",
                                   "Root Mean Squared Error",
-                                  "Mean Absolute Error"], default=None, placeholder = '')
+                                  "Mean Absolute Error"],
+                                 default=None, placeholder='')
     return metrics
 
 
@@ -184,6 +193,7 @@ def print_result(result: dict) -> None:
     for names, values in zip(metric_train_names, metric_train_values):
         st.write(f"{names}: {values}")
 
+
 # Main code
 st.subheader("Dataset Selection")
 
@@ -198,9 +208,13 @@ if datasets:
         if feature_names:
             st.subheader("Feature Selection")
             input_features = st.multiselect("Select input features",
-                                            feature_names, default = None, placeholder = '')
+                                            feature_names,
+                                            default=None,
+                                            placeholder='')
             target_feature = st.selectbox("Select target feature",
-                                          feature_names, index = None, placeholder='')
+                                          feature_names,
+                                          index=None,
+                                          placeholder='')
             if input_features and target_feature:
                 task_type = determine_task_type(input_features,
                                                 target_feature,
@@ -210,12 +224,13 @@ if datasets:
                 metrics = select_metrics(task_type)
                 if st.checkbox("Show Summary"):
                     show_summary(selected_dataset.name,
-                                input_features,
-                                target_feature,
-                                model,
-                                split_ratio,
-                                metrics)
-                if split_ratio and metrics and model and st.button("Train Model"):
+                                 input_features,
+                                 target_feature,
+                                 model,
+                                 split_ratio,
+                                 metrics)
+                if split_ratio and metrics and model and \
+                        st.button("Train Model"):
                     # pipeline = get_pipeline(datasett,
                     #                         features,
                     #                         input_features,
@@ -238,7 +253,3 @@ if datasets:
 else:
     st.warning("There are no Datasets available, "
                "please upload a Dataset in the Datasets page")
-
-
-
-

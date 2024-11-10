@@ -1,9 +1,8 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel
 import base64
-from typing import Literal, Optional
-import pandas as pd
+from typing import Optional
 import pickle
-from abc import ABC, abstractmethod
+from abc import ABC
 
 
 class Artifact(BaseModel, ABC):
@@ -59,7 +58,6 @@ class Artifact(BaseModel, ABC):
         """
         return self.data
 
-
     @staticmethod
     def from_pipeline(cls,
                       type: str,
@@ -78,7 +76,8 @@ class Artifact(BaseModel, ABC):
             asset_path (str): The path to the asset.
             version (str): The version of the artifact.
             tags: Tags associated with the artifact.
-            data (object): The data to be serialized and stored in the artifact.
+            data (object): The data to be serialized and stored in the
+                artifact.
             metadata: Additional metadata for the artifact.
 
         Returns:

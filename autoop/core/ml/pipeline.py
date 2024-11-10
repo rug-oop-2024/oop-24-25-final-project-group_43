@@ -124,6 +124,18 @@ Pipeline(
         self._predictions = predictions
 
     def _evaluate_train(self) -> None:
+        """
+        Evaluates the model on the training data using the specified metrics.
+
+        This method compacts the training feature vectors, makes
+        predictions using the model,
+        and evaluates these predictions against the true labels using each
+        metric in the metrics list. The results are stored in the
+        _metrics_results_train attribute.
+
+        Returns:
+            None
+        """
         X = self._compact_vectors(self._train_x)
         Y = self._train_y
         self._metrics_results_train = []
@@ -131,9 +143,6 @@ Pipeline(
         for metric in self._metrics:
             result = metric.evaluate(predictions, Y)
             self._metrics_results_train.append((metric, result))
-
-    
-            
 
     def execute(self) -> dict:
         """
