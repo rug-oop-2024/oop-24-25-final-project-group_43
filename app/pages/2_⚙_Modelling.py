@@ -28,6 +28,18 @@ datasets = automl.registry.list(type="dataset")
 
 
 def select_dataset(datasets: list) -> Dataset:
+    """
+    Prompts the user to select a dataset from a list of datasets using a selectbox.
+
+    Args:
+        datasets (list): A list of Dataset objects to choose from.
+
+    Returns:
+        Dataset: The selected Dataset object.
+
+    Notes:
+        - If no dataset is selected, an informational message is displayed.
+    """
     selected_dataset_name = st.selectbox("Select a dataset",
                                          [dataset.name for dataset in
                                           datasets])
@@ -40,6 +52,16 @@ def select_dataset(datasets: list) -> Dataset:
 
 
 def load_dataset(selected_dataset: Dataset) -> Dataset:
+    """
+    Loads a dataset from a CSV file and returns it as a Dataset object.
+
+    Args:
+        selected_dataset (Dataset): The selected dataset object containing the name and asset path.
+
+    Returns:
+        Dataset: A new Dataset object created from the loaded CSV file.
+
+    """
     st.write(f"Selected dataset: {selected_dataset.name}")
     file_path = os.path.join('assets/objects/', selected_dataset.asset_path)
     df = pd.read_csv(file_path)
@@ -50,6 +72,16 @@ def load_dataset(selected_dataset: Dataset) -> Dataset:
 
 
 def load_features(datasett: Dataset) -> list:
+    """
+    Load and detect feature types from the given dataset.
+
+    Args:
+        datasett (Dataset): The dataset from which to
+            detect and load features.
+
+    Returns:
+        list: A list of detected features.
+    """
     features = detect_feature_types(datasett)
     return features
 
@@ -57,6 +89,17 @@ def load_features(datasett: Dataset) -> list:
 def determine_task_type(input_features: List[str],
                         target_feature: str | int | float,
                         features: List[str]) -> str:
+    """
+    Determines the type of machine learning task based on the input features and target feature.
+
+    Args:
+        input_features (List[str]): A list of input feature names.
+        target_feature (str | int | float): The target feature name.
+        features (List[str]): A list of feature objects, where each object has 'name' and 'type' attributes.
+
+    Returns:
+        str: The type of task, either "regression" or "classification".
+    """
     if input_features and target_feature:
         target_feature_type = next((feature.type for feature in features if
                                     feature.name == target_feature), None)
@@ -71,6 +114,17 @@ def determine_task_type(input_features: List[str],
 
 
 def select_model(task_type: str) -> str:
+    """
+    Displays a model selection dropdown based on the task type
+        and returns the selected model.
+
+    Parameters:
+    task_type (str): The type of task for which the model is being selected.
+                     It can be either "classification" or "regression".
+
+    Returns:
+    str: The name of the selected model.
+    """
     st.subheader("Model Selection")
     if task_type == "classification":
         model = st.selectbox("Select a "
@@ -92,6 +146,13 @@ def select_model(task_type: str) -> str:
 
 
 def split_data() -> float:
+    """
+    Displays a subheader and a slider widget in a Streamlit
+        app to select the training set split ratio.
+
+    Returns:
+        float: The selected split ratio for the training set.
+    """
     st.subheader("Splitting Data")
     split_ratio = st.slider("Select the training set split ratio",
                             0.1, 0.9, 0.5, 0.05)
@@ -129,6 +190,19 @@ def get_pipeline(datasett: Dataset, features: List[str],
                  target_feature: str | int | float, model: str,
                  split_ratio: float,
                  metrics: List[str]) -> Pipeline:
+    """
+    Trains a machine learning model using the provided dataset and parameters, and returns the resulting pipeline.
+    Args:
+        datasett (Dataset): The dataset to be used for training the model.
+        features (List[str]): A list of feature names available in the dataset.
+        input_features (List[str]): A list of feature names to be used as input features for the model.
+        target_feature (str | int | float): The name of the target feature to be predicted by the model.
+        model (str): The name of the model to be used for training.
+        split_ratio (float): The ratio to split the dataset into training and testing sets.
+        metrics (List[str]): A list of metric names to evaluate the model's performance.
+    Returns:
+        Pipeline: The trained machine learning pipeline.
+    """   
     st.write("Training model...")
     input_features = [
         next(feature for feature in features if
@@ -152,6 +226,16 @@ def get_pipeline(datasett: Dataset, features: List[str],
 
 
 def save_pipeline(pipeline: Pipeline) -> None:
+    """
+    Prompts the user to enter a pipeline name and version, and saves the given pipeline
+    as an artifact with the specified name and version.
+
+    Args:
+        pipeline (Pipeline): The pipeline to be saved.
+
+    Returns:
+        None
+    """
     pipeline_name = st.text_input("Enter pipeline name")
     pipeline_version = st.text_input("Enter pipeline version")
     if st.button("Save Pipeline"):
@@ -171,6 +255,18 @@ def save_pipeline(pipeline: Pipeline) -> None:
 
 
 def print_result(result: dict) -> None:
+    """
+    Prints the metrics, training metrics, and predictions from the result dictionary.
+
+    Args:
+        result (dict): A dictionary containing the following keys:
+            - "metrics": A list of tuples where each tuple contains a metric name and its value.
+            - "metrics_train": A list of tuples where each tuple contains a training metric name and its value.
+            - "predictions": The predictions to be printed.
+
+    Returns:
+        None
+    """
 
     metrics = result["metrics"]
     metrics_train = result["metrics_train"]
