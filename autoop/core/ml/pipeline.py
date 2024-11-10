@@ -123,7 +123,7 @@ Pipeline(
             self._metrics_results.append((metric, result))
         self._predictions = predictions
 
-    def _evaluate_train(self) -> List:
+    def _evaluate_train(self) -> None:
         X = self._compact_vectors(self._train_x)
         Y = self._train_y
         self._metrics_results_train = []
@@ -131,7 +131,9 @@ Pipeline(
         for metric in self._metrics:
             result = metric.evaluate(predictions, Y)
             self._metrics_results_train.append((metric, result))
-        return self._metrics_results_train
+
+    
+            
 
     def execute(self) -> dict:
         """
@@ -151,9 +153,9 @@ Pipeline(
         self._split_data()
         self._train()
         self._evaluate()
-        metrics_train = self._evaluate_train()
+        self._evaluate_train()
         return {
             "metrics": self._metrics_results,
             "predictions": self._predictions,
-            "metrics_train": metrics_train
+            "metrics_train": self._metrics_results_train
         }
