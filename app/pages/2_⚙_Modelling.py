@@ -176,6 +176,7 @@ def print_result(result: dict) -> None:
 
     metrics = result["metrics"]
     metrics_train = result["metrics_train"]
+    predictions = result["predictions"]
 
     metric_values = [metric[1].item() for metric in metrics]
     metric_names = [str(metric[0]).split('.')[4].split(' ')[0]
@@ -192,6 +193,9 @@ def print_result(result: dict) -> None:
     st.subheader("Training Metrics:")
     for names, values in zip(metric_train_names, metric_train_values):
         st.write(f"{names}: {values}")
+
+    st.subheader("Predictions:")
+    st.write(predictions)
 
 
 # Main code
