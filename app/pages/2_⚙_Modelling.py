@@ -69,7 +69,7 @@ def determine_task_type(input_features: List[str],
         return task_type
 
 
-def select_model(task_type: str) -> str | List[str]:
+def select_model(task_type: str) -> str:
     st.subheader("Model Selection")
     if task_type == "classification":
         model = st.selectbox("Select a "
@@ -109,13 +109,12 @@ def select_metrics(task_type: str) -> List[str]:
 def show_summary(selected_dataset_name: str, input_features: List[str],
                  target_feature: str | int | float, model_type: str,
                  split_ratio: float, metrics: List[str]) -> None:
-    if st.checkbox("Show Summary"):
-        st.write(f"Selected dataset: {selected_dataset_name}")
-        st.write(f"Selected input features: {input_features}")
-        st.write(f"Selected target feature: {target_feature}")
-        st.write(f"Selected model: {model_type}")
-        st.write(f"Training set split ratio: {split_ratio}")
-        st.write(f"Selected metrics: {metrics}")
+    st.write(f"Selected dataset: {selected_dataset_name}")
+    st.write(f"Selected input features: {input_features}")
+    st.write(f"Selected target feature: {target_feature}")
+    st.write(f"Selected model: {model_type}")
+    st.write(f"Training set split ratio: {split_ratio}")
+    st.write(f"Selected metrics: {metrics}")
 
 
 def get_pipeline(datasett: Dataset, features: List[str],
@@ -141,7 +140,6 @@ def get_pipeline(datasett: Dataset, features: List[str],
         target_feature=target_feature,
         split=split_ratio
     )
-    pipeline.execute()
     st.write("Model trained successfully.")
     return pipeline
 
@@ -210,13 +208,14 @@ if datasets:
                 model = select_model(task_type)
                 split_ratio = split_data()
                 metrics = select_metrics(task_type)
-                show_summary(selected_dataset.name,
-                             input_features,
-                             target_feature,
-                             model,
-                             split_ratio,
-                             metrics)
-                if split_ratio and metrics and model and st.button("Create Pipeline"):
+                if st.checkbox("Show Summary"):
+                    show_summary(selected_dataset.name,
+                                input_features,
+                                target_feature,
+                                model,
+                                split_ratio,
+                                metrics)
+                if split_ratio and metrics and model and st.button("Train Model"):
                     # pipeline = get_pipeline(datasett,
                     #                         features,
                     #                         input_features,
@@ -231,13 +230,9 @@ if datasets:
                                             model,
                                             split_ratio,
                                             metrics)
-                    
                     if pipeline:
-                        print(model, pipeline)
                         print_result(pipeline.execute())
-                        st.markdown("---")
                         st.write(pipeline.execute())
-                        st.markdown("---")
                         save_pipeline(pipeline)
 
 else:
