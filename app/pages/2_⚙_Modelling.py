@@ -231,13 +231,6 @@ if datasets:
                                  metrics)
                 if split_ratio and metrics and model and \
                         st.button("Train Model"):
-                    # pipeline = get_pipeline(datasett,
-                    #                         features,
-                    #                         input_features,
-                    #                         target_feature,
-                    #                         model,
-                    #                         split_ratio,
-                    #                         metrics)
                     pipeline = get_pipeline(datasett,
                                             features,
                                             input_features,
