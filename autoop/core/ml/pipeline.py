@@ -124,7 +124,7 @@ Pipeline(
         self._predictions = predictions
 
     def _evaluate_train(self) -> List:
-        X = self._compact_vectors(self.x_train_X)
+        X = self._compact_vectors(self._train_x)
         Y = self._train_y
         self._metrics_results_train = []
         predictions = self._model.predict(X)
