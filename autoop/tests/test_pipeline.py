@@ -45,9 +45,9 @@ class TestPipeline(unittest.TestCase):
     def test_split_data(self):
         self.pipeline._preprocess_features()
         self.pipeline._split_data()
-        self.assertEqual(self.pipeline.x_train_X[0].shape[0],
+        self.assertEqual(self.pipeline._train_x[0].shape[0],
                          int(0.8 * self.ds_size))
-        self.assertEqual(self.pipeline._test_X[0].shape[0],
+        self.assertEqual(self.pipeline._test_x[0].shape[0],
                          self.ds_size - int(0.8 * self.ds_size))
 
     def test_train(self):
