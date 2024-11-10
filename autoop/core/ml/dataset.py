@@ -1,12 +1,11 @@
+"""Classes for managing datasets in AutoOp."""
 from autoop.core.ml.artifact import Artifact
 import pandas as pd
 import io
 
 
 class Dataset(Artifact):
-    """
-    A class used to represent a Dataset, inheriting from the Artifact class.
-    """
+    """A class that represents a Dataset, inherits from the Artifact class."""
     def __init__(self, *args, **kwargs):
         super().__init__(type="dataset", *args, **kwargs)
 

@@ -1,6 +1,4 @@
-"""
-Creates an Artifact class that represents a machine learning artifact.
-"""
+"""Creates an Artifact class that represents a machine learning artifact."""
 from pydantic import BaseModel
 import base64
 from typing import Optional
@@ -21,7 +19,6 @@ class Artifact(BaseModel, ABC):
 
     @property
     def id(self) -> str:
-
         """
         Generates a identifier for the artifact.
 
@@ -40,7 +37,7 @@ class Artifact(BaseModel, ABC):
 
     def save(self, data: bytes) -> bytes:
         """
-        Saves the given data to the file specified by asset_path.
+        Save the given data to the file specified by asset_path.
 
         Args:
             data (bytes): The data to be written to the file.
@@ -53,7 +50,7 @@ class Artifact(BaseModel, ABC):
 
     def read(self) -> bytes:
         """
-        Reads the data stored in the artifact.
+        Read the data stored in the artifact.
 
         Returns:
             bytes: The data stored in the artifact.
@@ -61,12 +58,12 @@ class Artifact(BaseModel, ABC):
         return self.data
 
     @staticmethod
-    def from_pipeline(cls,
+    def from_pipeline(cls: 'Artifact',
                       type: str,
                       name: str,
                       asset_path: str,
                       version: str,
-                      tags,
+                      tags: list[str],
                       data: object,
                       metadata) -> 'Artifact':
         """

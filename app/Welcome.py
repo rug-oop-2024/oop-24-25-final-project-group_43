@@ -1,3 +1,4 @@
+"""A simple Streamlit app to display a README.md file."""
 import streamlit as st
 
 st.set_page_config(
