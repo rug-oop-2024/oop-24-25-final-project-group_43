@@ -170,6 +170,16 @@ def split_data() -> float:
 
 
 def select_metrics(task_type: str) -> List[str]:
+    """
+    Display a Streamlit multiselect widget based on the task type.
+
+    Parameters:
+    task_type (str): The type of machine learning task.
+    It can be either "classification" or "regression".
+
+    Returns:
+    List[str]: A list of selected metrics as strings.
+    """
     st.subheader("Metrics Selection")
     if task_type == "classification":
         metrics = st.multiselect("Select metrics for classification",
@@ -187,6 +197,21 @@ def select_metrics(task_type: str) -> List[str]:
 def show_summary(selected_dataset_name: str, input_features: List[str],
                  target_feature: str | int | float, model_type: str,
                  split_ratio: float, metrics: List[str]) -> None:
+    """
+    Displays a summary of the selected dataset and model configuration.
+
+    Args:
+        selected_dataset_name (str): The name of the selected dataset.
+        input_features (List[str]): A list of input feature names.
+        target_feature (str | int | float): The target feature name or value.
+        model_type (str): The type of model selected.
+        split_ratio (float): The ratio for splitting the dataset into training
+        and testing sets.
+        metrics (List[str]): A list of metrics to evaluate the model.
+
+    Returns:
+        None
+    """
     st.write(f"Selected dataset: {selected_dataset_name}")
     st.write(f"Selected input features: {input_features}")
     st.write(f"Selected target feature: {target_feature}")
@@ -218,7 +243,7 @@ def get_pipeline(datasett: Dataset, features: List[str],
             to evaluate the model's performance.
     Returns:
         Pipeline: The trained machine learning pipeline.
-    """   
+    """
     st.write("Training model...")
     input_features = [
         next(feature for feature in features if

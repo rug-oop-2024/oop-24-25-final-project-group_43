@@ -1,6 +1,5 @@
 """	Module for defining evaluation metrics for machine learning models.	"""
 from abc import ABC, abstractmethod
-from typing import Any
 import numpy as np
 
 METRICS = [
@@ -13,7 +12,7 @@ METRICS = [
 ]
 
 
-def get_metric(name: str) -> Any:
+def get_metric(name: str) -> 'Metric':
     """
     Retrieve a metric object based on the provided metric name.
 
@@ -27,7 +26,7 @@ def get_metric(name: str) -> Any:
                     - "Precision"
 
     Returns:
-        Any: An instance of the corresponding metric class.
+        Metric: An instance of the requested metric.
 
     Raises:
         ValueError: If the provided metric name is not supported.
