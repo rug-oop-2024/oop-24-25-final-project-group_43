@@ -6,7 +6,17 @@ import io
 
 class Dataset(Artifact):
     """A class that represents a Dataset, inherits from the Artifact class."""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
+        """
+        Initialize a new Dataset instance.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            None
+        """
         super().__init__(type="dataset", *args, **kwargs)
 
     @staticmethod

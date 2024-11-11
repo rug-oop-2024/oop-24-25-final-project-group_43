@@ -29,7 +29,18 @@ class Database():
         _load():
             Loads the data from storage.
     """
-    def __init__(self, storage: Storage):
+    def __init__(self, storage: Storage) -> None:
+        """
+        Initializes the Database instance.
+
+        Args:
+            storage (Storage): The storage mechanism to be used for
+            the database.
+
+        Attributes:
+            _storage (Storage): The storage mechanism for the database.
+            _data (dict): A dictionary to hold the data loaded from storage.
+        """
         self._storage = storage
         self._data = {}
         self._load()
@@ -91,11 +102,11 @@ class Database():
             return []
         return [(id, data) for id, data in self._data[collection].items()]
 
-    def refresh(self):
+    def refresh(self) -> None:
         """Refresh the database by loading the data from storage"""
         self._load()
 
-    def _persist(self):
+    def _persist(self) -> None:
         """Persist the data to storage"""
         for collection, data in self._data.items():
             if not data:
@@ -111,7 +122,7 @@ class Database():
             if not self._data.get(collection, id):
                 self._storage.delete(f"{collection}{os.sep}{id}")
 
-    def _load(self):
+    def _load(self) -> None:
         """Load the data from storage"""
         self._data = {}
         for key in self._storage.list(""):

@@ -65,7 +65,8 @@ class Artifact(BaseModel, ABC):
                       version: str,
                       tags: list[str],
                       data: object,
-                      metadata) -> 'Artifact':
+                      metadata: dict
+                      ) -> 'Artifact':
         """
         Create an Artifact instance from a pipeline.
 
