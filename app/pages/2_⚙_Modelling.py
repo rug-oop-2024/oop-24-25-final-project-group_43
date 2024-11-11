@@ -14,7 +14,13 @@ from typing import List
 st.set_page_config(page_title="Modelling", page_icon="📈")
 
 
-def write_helper_text(text: str):
+def write_helper_text(text: str) -> None:
+    """
+    Writes the given text as HTML with a specific style to Streamlit.
+
+    Args:
+        text (str): The text to be written in the Streamlit app.
+    """
     st.write(f"<p style=\"color: #888;\">{text}</p>", unsafe_allow_html=True)
 
 
@@ -29,7 +35,8 @@ datasets = automl.registry.list(type="dataset")
 
 def select_dataset(datasets: list) -> Dataset:
     """
-    Prompts the user to select a dataset from a list of datasets using a selectbox.
+    Prompts the user to select a dataset from a list of datasets
+        using a selectbox.
 
     Args:
         datasets (list): A list of Dataset objects to choose from.
@@ -56,7 +63,8 @@ def load_dataset(selected_dataset: Dataset) -> Dataset:
     Loads a dataset from a CSV file and returns it as a Dataset object.
 
     Args:
-        selected_dataset (Dataset): The selected dataset object containing the name and asset path.
+        selected_dataset (Dataset): The selected dataset object
+        containing the name and asset path.
 
     Returns:
         Dataset: A new Dataset object created from the loaded CSV file.
@@ -90,12 +98,14 @@ def determine_task_type(input_features: List[str],
                         target_feature: str | int | float,
                         features: List[str]) -> str:
     """
-    Determines the type of machine learning task based on the input features and target feature.
+    Determines the type of machine learning task based on the
+        input features and target feature.
 
     Args:
         input_features (List[str]): A list of input feature names.
         target_feature (str | int | float): The target feature name.
-        features (List[str]): A list of feature objects, where each object has 'name' and 'type' attributes.
+        features (List[str]): A list of feature objects, where each
+            object has 'name' and 'type' attributes.
 
     Returns:
         str: The type of task, either "regression" or "classification".
