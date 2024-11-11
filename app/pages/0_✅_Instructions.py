@@ -1,4 +1,4 @@
-from autoop.core.ml.artifact import Artifact
+"""Instructions page shown when the app is launched."""
 import streamlit as st
 
 st.set_page_config(
