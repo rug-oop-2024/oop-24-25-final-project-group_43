@@ -1,3 +1,6 @@
+"""
+This package contains the implementation of multiple linear regression
+"""
 from autoop.core.ml.model.regression.multiple_linear_regression import \
     MultipleLinearRegression
 

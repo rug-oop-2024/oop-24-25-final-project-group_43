@@ -1,3 +1,7 @@
+"""
+This package contains machine learning models for
+classification and regression.
+"""
 from autoop.core.ml.model.model import Model
 from autoop.core.ml.model.regression.multiple_linear_regression \
     import MultipleLinearRegression

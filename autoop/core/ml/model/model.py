@@ -7,7 +7,18 @@ class Model(ABC):
     """
     Abstract base class for machine learning models.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
+        """
+        Initializes the model with given arguments.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Attributes:
+            parameters (dict): A dictionary to store model parameters.
+            type: The type of the model.
+        """
         self.parameters: dict = {}
         self.type = type
 

@@ -11,15 +11,93 @@ import numpy as np
 
 
 class Pipeline():
+    """
+    Pipeline class for managing the machine learning workflow.
 
+    This class encapsulates the entire machine learning pipeline, including
+    preprocessing, data splitting, model training, and evaluation. It supports
+    both classification and regression tasks and allows for the registration
+    and retrieval of artifacts generated during the pipeline execution.
+
+        _dataset (Dataset): The dataset to be used in the pipeline.
+        _model (Model): The machine learning model to be trained
+        and evaluated.
+        _input_features (List[Feature]): A list of features to be
+        used as input for the model.
+        _target_feature (Feature): The feature to be predicted by
+        the model.
+        _metrics (List[Metric]): A list of metrics to evaluate the model.
+        _artifacts (dict): A dictionary to store artifacts generated
+        during the pipeline execution.
+        _split (float): The proportion of the dataset to be used for training.
+        _output_vector (list): The preprocessed target data.
+        _input_vectors (list of lists): The preprocessed input data.
+        _train_x (list of lists): The training subset of the input data.
+        _test_x (list of lists): The testing subset of the input data.
+        _train_y (list): The training subset of the output data.
+        _test_y (list): The testing subset of the output data.
+        _metrics_results (list): The evaluation results of the model
+        on the test data.
+        _predictions (list): The predictions made by the model on
+        the test data.
+        _metrics_results_train (list): The evaluation results of the
+        model on the training data.
+
+    Methods:
+        __init__(metrics, dataset, model, input_features,
+            target_feature, split=0.8):
+            Initializes the pipeline with the given dataset, model,
+            input features, target feature, and metrics.
+        __str__():
+        model():
+        artifacts():
+            Returns the artifacts generated during the pipeline execution
+            to be saved.
+        _register_artifact(name, artifact):
+        _preprocess_features():
+        _split_data():
+            Splits the input and output data into training and testing
+            sets based on the specified split ratio.
+        _compact_vectors(vectors):
+        _train():
+        _evaluate():
+            Evaluates the model using the test data and computes the
+            specified metrics.
+        _evaluate_train():
+        execute():
+            Executes the machine learning pipeline by performing preprocessing,
+            data splitting, training, and evaluation.
+    """
     def __init__(self,
                  metrics: List[Metric],
                  dataset: Dataset,
                  model: Model,
                  input_features: List[Feature],
                  target_feature: Feature,
-                 split=0.8,
-                 ):
+                 split: float = 0.8,
+                 ) -> None:
+        """
+        Initializes the pipeline with the given dataset, model,
+        input features, target feature, and metrics.
+
+        Args:
+            metrics (List[Metric]): A list of metrics to evaluate the model.
+            dataset (Dataset): The dataset to be used in the pipeline.
+            model (Model): The machine learning model to be trained and
+                evaluated.
+            input_features (List[Feature]): A list of features to be used as
+            input for the model.
+            target_feature (Feature): The feature to be predicted by the model.
+            split (float, optional): The proportion of the dataset to be used
+            for training.
+                                        Defaults to 0.8.
+
+        Raises:
+            ValueError: If the target feature is categorical and the
+                model type is not classification.
+            ValueError: If the target feature is continuous and the model
+                type is not regression.
+        """
         self._dataset = dataset
         self._model = model
         self._input_features = input_features
@@ -35,7 +113,16 @@ class Pipeline():
             raise ValueError("Model type must be regression for"
                              " continuous target feature")
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Returns a string representation of the Pipeline object.
+
+        The string includes the type of the model, a list of input features,
+        the target feature, the data split, and a list of metrics.
+
+        Returns:
+            str: A formatted string representation of the Pipeline object.
+        """
         return f"""
 Pipeline(
     model={self._model.type},
@@ -47,13 +134,19 @@ Pipeline(
 """
 
     @property
-    def model(self):
+    def model(self) -> Model:
+        """
+        Returns the machine learning model instance.
+
+        Returns:
+            Model: The machine learning model instance.
+        """
         return self._model
 
     @property
     def artifacts(self) -> List[Artifact]:
         """Used to get the artifacts generated during the
-        pipeline execution to be saved
+        pipeline execution to be saved.
         """
         artifacts = []
         for name, artifact in self._artifacts.items():
@@ -77,7 +170,7 @@ Pipeline(
             name=f"pipeline_model_{self._model.type}"))
         return artifacts
 
-    def _register_artifact(self, name: str, artifact):
+    def _register_artifact(self, name: str, artifact: Artifact) -> None:
         """
         Registers an artifact with a given name.
 
@@ -87,7 +180,7 @@ Pipeline(
         """
         self._artifacts[name] = artifact
 
-    def _preprocess_features(self):
+    def _preprocess_features(self) -> None:
         """
         Preprocesses the features of the dataset.
 
@@ -117,7 +210,7 @@ Pipeline(
         self._input_vectors = [data for (feature_name, data,
                                          artifact) in input_results]
 
-    def _split_data(self):
+    def _split_data(self) -> None:
         """
         Splits the input and output data into training and testing
         sets based on the specified split ratio.
@@ -147,10 +240,10 @@ Pipeline(
                          in self._input_vectors]
         self._test_x = [vector[int(split * len(vector)):] for vector
                         in self._input_vectors]
-        self._train_y = self._output_vector[:int(split *
-                                                 len(self._output_vector))]
-        self._test_y = self._output_vector[int(split *
-                                               len(self._output_vector)):]
+        self._train_y = self._output_vector[:int(
+            split * len(self._output_vector))]
+        self._test_y = self._output_vector[int(
+            split * len(self._output_vector)):]
 
     def _compact_vectors(self, vectors: List[np.array]) -> np.array:
         """
@@ -166,7 +259,7 @@ Pipeline(
         """
         return np.concatenate(vectors, axis=1)
 
-    def _train(self):
+    def _train(self) -> None:
         """
         Trains the model using the training data.
 

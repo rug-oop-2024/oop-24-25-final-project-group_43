@@ -3,10 +3,27 @@ import numpy as np
 from sklearn.preprocessing import PolynomialFeatures
 from autoop.core.ml.model.model import Model
 from autoop.core.ml.model.regression.multiple_linear_regression \
-  import MultipleLinearRegression
+    import MultipleLinearRegression
 
 
 class PolynomialRegression(Model):
+    """
+    A class used to represent a Polynomial Regression model.
+
+      poly_features (PolynomialFeatures): An instance of PolynomialFeatures
+      to generate polynomial features.
+      mlr (MultipleLinearRegression): An instance of MultipleLinearRegression
+      for performing the regression.
+      type (str): The type of the model, set to "regression".
+
+    Methods:
+      __init__(degree: int = 2) -> None:
+      fit(X: np.ndarray, y: np.ndarray) -> None:
+      predict(X: np.ndarray) -> np.ndarray:
+        Predicts the target values for the given input features using the
+        polynomial regression model.
+      get_params() -> dict:
+    """
     def __init__(self, degree: int = 2) -> None:
         """
         Initializes the Polynomial Regression model with a specified degree.
